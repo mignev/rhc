@@ -11,7 +11,7 @@ describe RHC::Commands::Apps do
       let(:arguments) { ['apps'] }
 
       it { expect { run }.to exit_with_code(1) }
-      it { run_output.should match(/In order to deploy applications.*rhc create-domain/) }
+      it { run_output.should match(/In order to deploy applications.*app create-domain/) }
     end
 
     context 'with a domain' do
@@ -19,7 +19,7 @@ describe RHC::Commands::Apps do
       let!(:domain){ rest_client.add_domain("first") }
 
       it { expect { run }.to exit_with_code(1) }
-      it { run_output.should match(/No applications.*rhc create-app/) }
+      it { run_output.should match(/No applications.*app create-app/) }
 
       context 'with apps' do
         let(:arguments) { ['apps'] }
@@ -33,7 +33,7 @@ describe RHC::Commands::Apps do
     context 'when help is shown' do
       let(:arguments) { ['apps', '--help'] }
       it { expect { run }.to exit_with_code(0) }
-      it { run_output.should match(/rhc apps.*Display the list of applications/m) }
+      it { run_output.should match(/app apps.*Display the list of applications/m) }
     end
   end
 end

@@ -5,11 +5,11 @@ describe RHC::CLI do
 
   shared_examples_for 'a global help page' do
     let(:arguments) { @arguments or raise "no arguments" }
-    it('should contain the program description') { run_output.should =~ /Command line interface for OpenShift/ }
+    it('should contain the program description') { run_output.should =~ /Command line interface for StartApp/ }
     it('should describe getting started') { run_output.should =~ /Getting started:/ }
     it('should describe basic command') { run_output.should =~ /Working with apps:/ }
-    it('should mention the help command') { run_output.should =~ /See 'rhc help <command>'/ }
-    it('should mention the help options command') { run_output.should =~ /rhc help options/ }
+    it('should mention the help command') { run_output.should =~ /See 'app help <command>'/ }
+    it('should mention the help options command') { run_output.should =~ /app help options/ }
   end
 
   shared_examples_for 'a first run wizard' do
@@ -21,7 +21,7 @@ describe RHC::CLI do
 
   shared_examples_for 'a help page' do
     let(:arguments) { @arguments or raise "no arguments" }
-    it('should contain the program description') { run_output.should =~ /Command line interface for OpenShift/ }
+    it('should contain the program description') { run_output.should =~ /Command line interface for StartApp/ }
     it('should contain the global options') { run_output.should =~ /Global Options/ }
     it('should provide a --config switch') { run_output.should =~ /\-\-config FILE/ }
   end
@@ -58,7 +58,7 @@ describe RHC::CLI do
   shared_examples_for 'version output' do
     let(:arguments) { @arguments }
     it 'should contain version output' do
-      run_output.should =~ /rhc \d+\.\d+(:?\.d+)?/
+      run_output.should =~ /app \d+\.\d+(:?\.d+)?/
     end
   end
 
@@ -118,7 +118,7 @@ describe RHC::CLI do
 
     context 'with help and a single matching command segment' do
       let(:arguments){ ['help', 'app creat'] }
-      it("prints the usage for the command"){ run_output.should match('Usage: rhc app-create <') }
+      it("prints the usage for the command"){ run_output.should match('Usage: app app-create <') }
       it("prints part of the description for the command"){ run_output.should match('OpenShift runs the components of your') }
       it("prints a local option"){ run_output.should match('--namespace NAME') }
     end

@@ -21,7 +21,7 @@ describe RHC::Commands::Logout do
 
     context "when calling from the alias" do
       let(:arguments){ ['account', 'logout', '-h'] }
-      it("should print usage"){ run_output.should match "Usage: rhc logout" }
+      it("should print usage"){ run_output.should match "Usage: app logout" }
     end
 
     it("should clear the token cache"){ expect{ run }.to call(:clear).on(token_store) }

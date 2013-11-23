@@ -96,18 +96,18 @@ describe RHC::Commands::App do
       before{ FakeFS.deactivate! }
       context do
         let(:arguments) { ['help', 'create-app'] }
-        it{ run_output.should match "Usage: rhc app-create <name>" }
+        it{ run_output.should match "Usage: app app-create <name>" }
       end
       context do
         let(:arguments) { ['create-app', '-h'] }
-        it{ run_output.should match "Usage: rhc app-create <name>" }
+        it{ run_output.should match "Usage: app app-create <name>" }
       end
     end
 
     context "when run with no arguments" do
       before{ FakeFS.deactivate! }
       let(:arguments){ ['create-app'] }
-      it{ run_output.should match "Usage: rhc app-create <name>" }
+      it{ run_output.should match "Usage: app app-create <name>" }
       it{ run_output.should match "When creating an application, you must provide a name and a cartridge from the list below:" }
       it{ run_output.should match "mock_standalone_cart-1" }
       it{ run_output.should match "Please specify the name of the application" }

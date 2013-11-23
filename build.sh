@@ -1,3 +1,3 @@
 #!/bin/bash
 
-gem build rhc.gemspec
+gem build app.gemspec

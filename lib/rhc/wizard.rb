@@ -80,7 +80,7 @@ module RHC
     end
 
     def openshift_server
-      options.server || config['libra_server'] || "openshift.redhat.com"
+      options.server || config['libra_server'] || "broker.startapp.bg"
     end
 
     def new_client_for_options
@@ -155,7 +155,7 @@ module RHC
     #
 
     def greeting_stage
-      info "OpenShift Client Tools (RHC) Setup Wizard"
+      info "StartApp Client Tools (app) Setup Wizard"
 
       paragraph do
         say "This wizard will help you upload your SSH keys, set your application namespace, and check that other programs like Git are properly installed."
@@ -202,7 +202,7 @@ module RHC
 
       if rest_client.supports_sessions? && !options.token && options.create_token != false
         paragraph do
-          info "OpenShift can create and store a token on disk which allows to you to access the server without using your password. The key is stored in your home directory and should be kept secret.  You can delete the key at any time by running 'rhc logout'."
+          info "StartApp can create and store a token on disk which allows to you to access the server without using your password. The key is stored in your home directory and should be kept secret.  You can delete the key at any time by running 'app logout'."
           if options.create_token or agree "Generate a token now? (yes|no) "
             say "Generating an authorization token for this client ... "
             token = rest_client.new_session
@@ -257,13 +257,13 @@ module RHC
       return true if ssh_key_uploaded?
 
       upload = paragraph do
-        agree "Your public SSH key must be uploaded to the OpenShift server to access code.  Upload now? (yes|no) "
+        agree "Your public SSH key must be uploaded to the StartApp server to access code.  Upload now? (yes|no) "
       end
 
       if upload
         if ssh_keys.empty?
           paragraph do
-            info "Since you do not have any keys associated with your OpenShift account, "\
+            info "Since you do not have any keys associated with your StartApp account, "\
                 "your new key will be uploaded as the 'default' key."
             upload_ssh_key('default')
           end
@@ -288,7 +288,7 @@ module RHC
         end
       else
         paragraph do
-          info "You can upload your public SSH key at a later time using the 'rhc sshkey' command"
+          info "You can upload your public SSH key at a later time using the 'app sshkey' command"
         end
       end
 
@@ -384,7 +384,7 @@ module RHC
           paragraph do
             say [
               "Applications are grouped into domains - each domain has a unique name (called a namespace) that becomes part of your public application URL.",
-              ("You may create your first domain here or leave it blank and use 'rhc create-domain' later." if namespace_optional?),
+              ("You may create your first domain here or leave it blank and use 'app create-domain' later." if namespace_optional?),
               "You will not be able to create an application without completing this step.",
             ].compact.join(' ')
           end
@@ -415,10 +415,10 @@ module RHC
         else
           info "none"
 
-          paragraph{ say "Run 'rhc create-app' to create your first application." }
+          paragraph{ say "Run 'app create-app' to create your first application." }
           paragraph do
             say table(standalone_cartridges.sort {|a,b| a.display_name <=> b.display_name }.map do |cart|
-              [' ', cart.display_name, "rhc create-app <app name> #{cart.name}"]
+              [' ', cart.display_name, "app create-app <app name> #{cart.name}"]
             end)
           end
         end
@@ -503,10 +503,10 @@ module RHC
     ###
     def finalize_stage
       paragraph do
-        say "The OpenShift client tools have been configured on your computer.  " \
-            "You can run this setup wizard at any time by using the command 'rhc setup' " \
+        say "The StartApp client tools have been configured on your computer.  " \
+            "You can run this setup wizard at any time by using the command 'app setup' " \
             "We will now execute your original " \
-            "command (rhc #{ARGV.join(" ")})"
+            "command (app #{ARGV.join(" ")})"
       end
       true
     end
@@ -514,7 +514,7 @@ module RHC
     def config_namespace(namespace)
       # skip if string is empty
       if namespace_optional? and (namespace.nil? or namespace.chomp.blank?)
-        paragraph{ info "You may create a domain later through 'rhc create-domain'" }
+        paragraph{ info "You may create a domain later through 'app create-domain'" }
         return true
       end
 
@@ -544,7 +544,7 @@ module RHC
     end
 
     def generic_unix_install_check
-      paragraph do 
+      paragraph do
         say "Checking for git ... "
 
         if has_git?
@@ -555,7 +555,7 @@ module RHC
           paragraph do
             say "Automated installation of client tools is not supported for " \
                 "your platform. You will need to manually install git for full " \
-                "OpenShift functionality."
+                "StartApp functionality."
           end
         end
       end

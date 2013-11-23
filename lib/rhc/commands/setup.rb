@@ -33,7 +33,7 @@ module RHC::Commands
     option ['--autocomplete'], "Instructions for enabling tab-completion"
     def run
       if options.autocomplete
-        src = File.join(File.join(Gem.loaded_specs['rhc'].full_gem_path, "autocomplete"), "rhc_bash")
+        src = File.join(File.join(Gem.loaded_specs['app'].full_gem_path, "autocomplete"), "rhc_bash")
         dest = File.join(RHC::Config.home_conf_dir, "bash_autocomplete")
 
         FileUtils.mkdir_p(RHC::Config.home_conf_dir)
@@ -45,7 +45,7 @@ module RHC::Commands
 
             . #{dest}
 
-          Save your shell and then restart. Type "rhc" and then hit the TAB key twice to
+          Save your shell and then restart. Type "app" and then hit the TAB key twice to
           trigger completion of your command.
 
           Tab-completion is not available in the Windows terminal.

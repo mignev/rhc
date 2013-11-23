@@ -9,7 +9,7 @@ module RHC
   module TarGz
 
     def self.contains(filename, search, force_ruby=false)
-      
+
       return false if ! (File.file? filename and File.basename(filename).downcase =~ /.\.t(ar\.)?gz$/i)
 
       regex = Regexp.new search
@@ -30,15 +30,20 @@ module RHC
       else
         # combining STDOUT and STDERR (i.e., 2>&1) does not suppress output
         # when the specs run via 'bundle exec rake spec'
-        system "#{TAR_BIN} --wildcards -tf '#{filename}' '#{regex.source}' 2>/dev/null >/dev/null"
+        wildcards_option = macos? ? "" : "--wildcards"
+        system "#{TAR_BIN} #{wildcards_option} -tf '#{filename}' '#{regex.source}' 2>/dev/null >/dev/null"
       end
     end
 
     private
+      def self.macos?
+        (/darwin/ =~ RUBY_PLATFORM) != nil
+      end
+
       def self.zlib
         #:nocov:
         require 'zlib' rescue nil
-        if defined? Zlib::GzipReader 
+        if defined? Zlib::GzipReader
           Zlib
         else
           require 'rhc/vendor/zliby'

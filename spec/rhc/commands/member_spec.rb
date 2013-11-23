@@ -12,7 +12,7 @@ describe RHC::Commands::Member do
     it "should display help" do
       expect { run }.to exit_with_code(0)
     end
-    it('should output usage') { run_output.should match "Usage: rhc member" }
+    it('should output usage') { run_output.should match "Usage: app member" }
     it('should output info about roles') { run_output.should match "Teams of developers can collaborate" }
   end
 

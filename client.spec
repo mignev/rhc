@@ -1,14 +1,14 @@
 %define gemdir %(ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define gemversion %(echo %{version} | cut -d'.' -f1-3)
 
-Summary:       OpenShift client management tools
-Name:          rhc
-Version: 1.17.3
+Summary:       StartApp client management tools
+Name:          app
+Version: 0.1.0
 Release:       1%{?dist}
 Group:         Network/Daemons
 License:       ASL 2.0
-URL:           http://openshift.redhat.com
-Source0:       rhc-%{version}.tar.gz
+URL:           http://startapp.bg
+Source0:       app-%{version}.tar.gz
 
 BuildRoot:     %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 BuildRequires: ruby >= 1.8.5
@@ -29,7 +29,7 @@ Requires:      git
 Requires:      rubygem-net-ssh-multi
 %endif
 Obsoletes:     rhc-rest
-Provides:      rubygem-rhc
+Provides:      rubygem-app
 
 BuildArch:     noarch
 
@@ -40,7 +40,7 @@ Provides OpenShift client libraries.
 %setup -q
 
 %build
-for f in bin/rhc*
+for f in bin/app*
 do
   ruby -c $f
 done
@@ -73,19 +73,19 @@ fi
 LC_ALL=en_US.UTF-8
 
 # Package the gem
-gem build rhc.gemspec
+gem build app.gemspec
 
 mkdir -p .%{gemdir}
-# Ignore dependencies here because these will be handled by rpm 
+# Ignore dependencies here because these will be handled by rpm
 gem install --install-dir $RPM_BUILD_ROOT/%{gemdir} --bindir $RPM_BUILD_ROOT/%{_bindir} --local -V --force --rdoc --ignore-dependencies \
-     rhc-%{version}.gem
+     app-%{version}.gem
 
 # Copy the bash autocompletion script
 mkdir -p "$RPM_BUILD_ROOT/etc/bash_completion.d/"
-cp autocomplete/rhc_bash $RPM_BUILD_ROOT/etc/bash_completion.d/rhc
+cp autocomplete/rhc_bash $RPM_BUILD_ROOT/etc/bash_completion.d/app
 
-cp LICENSE $RPM_BUILD_ROOT/%{gemdir}/gems/rhc-%{version}/LICENSE
-cp COPYRIGHT $RPM_BUILD_ROOT/%{gemdir}/gems/rhc-%{version}/COPYRIGHT
+cp LICENSE $RPM_BUILD_ROOT/%{gemdir}/gems/app-%{version}/LICENSE
+cp COPYRIGHT $RPM_BUILD_ROOT/%{gemdir}/gems/app-%{version}/COPYRIGHT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -94,15 +94,15 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %doc LICENSE
 %doc COPYRIGHT
-%{_bindir}/rhc
-%{_mandir}/man1/rhc*
+%{_bindir}/app
+%{_mandir}/man1/app*
 %{_mandir}/man5/express*
-%{gemdir}/gems/rhc-%{version}/
-%{gemdir}/cache/rhc-%{version}.gem
-%{gemdir}/doc/rhc-%{version}
-%{gemdir}/specifications/rhc-%{version}.gemspec
+%{gemdir}/gems/app-%{version}/
+%{gemdir}/cache/app-%{version}.gem
+%{gemdir}/doc/app-%{version}
+%{gemdir}/specifications/app-%{version}.gemspec
 %config(noreplace) %{_sysconfdir}/openshift/express.conf
-%attr(0644,-,-) /etc/bash_completion.d/rhc
+%attr(0644,-,-) /etc/bash_completion.d/app
 
 %changelog
 * Mon Nov 11 2013 Adam Miller <admiller@redhat.com> 1.17.3-1
@@ -219,7 +219,7 @@ rm -rf $RPM_BUILD_ROOT
 - Origin UI 72 - Memberhip (ccoleman@redhat.com)
 
 * Thu Sep 26 2013 Troy Dawson <tdawson@redhat.com> 1.15.2-1
-- 
+-
 
 * Thu Sep 26 2013 Troy Dawson <tdawson@redhat.com> 1.15.1-1
 - flatten than compact ssh cmd (mateus@caruccio.com)
@@ -1971,7 +1971,7 @@ rm -rf $RPM_BUILD_ROOT
 - US2833: moved port-forward to new command structure (ffranz@redhat.com)
 
 * Mon Sep 10 2012 Troy Dawson <tdawson@redhat.com> 0.98.12-1
-- 
+-
 
 * Mon Sep 10 2012 Troy Dawson <tdawson@redhat.com> 0.98.11-1
 - US2600: [Debt] Refactor RHC key commands (asari.ruby@gmail.com)
@@ -2186,17 +2186,17 @@ rm -rf $RPM_BUILD_ROOT
 - [Bug 848611] check for cartridge_url is not nil (johnp@redhat.com)
 
 * Wed Aug 15 2012 Adam Miller <admiller@redhat.com> 0.97.10-1
-- 
+-
 
 * Wed Aug 15 2012 Adam Miller <admiller@redhat.com> 0.97.9-1
 - Merge branch 'master' of github.com:openshift/rhc (admiller@redhat.com)
 - Correct punctuation in client.spec (ccoleman@redhat.com)
 
 * Wed Aug 15 2012 Adam Miller <admiller@redhat.com> 0.97.8-1
-- 
+-
 
 * Wed Aug 15 2012 Adam Miller <admiller@redhat.com>
-- 
+-
 
 * Wed Aug 15 2012 Adam Miller <admiller@redhat.com> 0.97.7-1
 - regex fix from git - match on word boundry (johnp@redhat.com)
@@ -2212,7 +2212,7 @@ rm -rf $RPM_BUILD_ROOT
   (johnp@redhat.com)
 
 * Mon Aug 13 2012 Adam Miller <admiller@redhat.com> 0.97.6-1
-- 
+-
 
 * Fri Aug 10 2012 Adam Miller <admiller@redhat.com> 0.97.5-1
 - micro version bump, should have been auto-committed. will follow up
@@ -2340,7 +2340,7 @@ rm -rf $RPM_BUILD_ROOT
 - add help templates for usage (johnp@redhat.com)
 
 * Wed Aug 08 2012 Adam Miller <admiller@redhat.com> 0.97.4-1
-- 
+-
 
 * Tue Aug 07 2012 Adam Miller <admiller@redhat.com> 0.97.3-1
 - Bug 845171 - Was returning too aggressively, output not produced.
@@ -2647,7 +2647,7 @@ rm -rf $RPM_BUILD_ROOT
   (johnp@redhat.com)
 
 * Thu May 31 2012 Adam Miller <admiller@redhat.com> 0.93.18-1
-- 
+-
 
 * Thu May 31 2012 Adam Miller <admiller@redhat.com> 0.93.17-1
 - Added a fallback for ssh keys fingerprint handling to the setup wizard
@@ -2676,7 +2676,7 @@ rm -rf $RPM_BUILD_ROOT
 - Fixes BZ 824312, back to native tar if not on windows (ffranz@redhat.com)
 
 * Tue May 29 2012 Adam Miller <admiller@redhat.com> 0.93.15-1
-- 
+-
 
 * Tue May 29 2012 Adam Miller <admiller@redhat.com> 0.93.14-1
 - Merge pull request #44 from fabianofranz/master (johnp@redhat.com)
@@ -2734,7 +2734,7 @@ rm -rf $RPM_BUILD_ROOT
 - [tests] stub out wizzard tests (johnp@redhat.com)
 
 * Thu May 24 2012 Adam Miller <admiller@redhat.com> 0.93.10-1
-- 
+-
 
 * Thu May 24 2012 Adam Miller <admiller@redhat.com> 0.93.9-1
 - Merge branch 'master' of github.com:openshift/os-client-tools
@@ -2890,7 +2890,7 @@ rm -rf $RPM_BUILD_ROOT
   override (fotios@redhat.com)
 
 * Thu May 03 2012 Adam Miller <admiller@redhat.com> 0.92.5-1
-- 
+-
 
 * Thu May 03 2012 Adam Miller <admiller@redhat.com> 0.92.4-1
 - Fix for BugZ#817985. gear_profile was not being passed for scaled apps
@@ -2926,7 +2926,7 @@ rm -rf $RPM_BUILD_ROOT
 - bumping spec versions (admiller@redhat.com)
 
 * Wed Apr 25 2012 Adam Miller <admiller@redhat.com> 0.91.10-1
-- 
+-
 
 * Wed Apr 25 2012 Adam Miller <admiller@redhat.com> 0.91.9-1
 - Removed finding rhc-rest before uninstalling since we can just catch the
@@ -3034,7 +3034,7 @@ rm -rf $RPM_BUILD_ROOT
 - error out on app create if domain isn't created yet (johnp@redhat.com)
 
 * Fri Mar 30 2012 Dan McPherson <dmcphers@redhat.com> 0.89.10-1
-- 
+-
 
 * Thu Mar 29 2012 Dan McPherson <dmcphers@redhat.com> 0.89.9-1
 - add Requires dep on rhc-rest (johnp@redhat.com)
@@ -3052,13 +3052,13 @@ rm -rf $RPM_BUILD_ROOT
   to propagate that back to the end-user. (rmillner@redhat.com)
 
 * Tue Mar 27 2012 Dan McPherson <dmcphers@redhat.com> 0.89.6-1
-- 
+-
 
 * Tue Mar 27 2012 Dan McPherson <dmcphers@redhat.com> 0.89.5-1
-- 
+-
 
 * Mon Mar 26 2012 Dan McPherson <dmcphers@redhat.com> 0.89.4-1
-- 
+-
 
 * Mon Mar 26 2012 Dan McPherson <dmcphers@redhat.com> 0.89.3-1
 - Merge branch 'master' of github.com:openshift/os-client-tools
@@ -3068,7 +3068,7 @@ rm -rf $RPM_BUILD_ROOT
 - add rhc-port-forward to the rhc command (rhc port-forward) (johnp@redhat.com)
 
 * Sat Mar 17 2012 Dan McPherson <dmcphers@redhat.com> 0.89.2-1
-- 
+-
 
 * Sat Mar 17 2012 Dan McPherson <dmcphers@redhat.com> 0.89.1-1
 - bump spec number (dmcphers@redhat.com)
@@ -3225,7 +3225,7 @@ rm -rf $RPM_BUILD_ROOT
 - fix for bug 785638 (abhgupta@redhat.com)
 
 * Sun Jan 29 2012 Dan McPherson <dmcphers@redhat.com> 0.85.7-1
-- 
+-
 
 * Sun Jan 29 2012 Dan McPherson <dmcphers@redhat.com> 0.85.6-1
 - Merge branch 'master' of github.com:openshift/os-client-tools
@@ -3239,7 +3239,7 @@ rm -rf $RPM_BUILD_ROOT
 - corrected the command description in the usage text (abhgupta@redhat.com)
 
 * Fri Jan 27 2012 Dan McPherson <dmcphers@redhat.com> 0.85.4-1
-- 
+-
 
 * Fri Jan 27 2012 Dan McPherson <dmcphers@redhat.com> 0.85.3-1
 - minor fixe to rhc domain status command (abhgupta@redhat.com)
@@ -3358,7 +3358,7 @@ rm -rf $RPM_BUILD_ROOT
   (aboone@redhat.com)
 
 * Tue Dec 06 2011 Alex Boone <aboone@redhat.com> 0.83.3-1
-- 
+-
 
 * Tue Dec 06 2011 Alex Boone <aboone@redhat.com> 0.83.2-1
 - Construct the Git url earlier in case we have to include it in an error
@@ -3385,7 +3385,7 @@ rm -rf $RPM_BUILD_ROOT
   exist (fotios@redhat.com)
 
 * Tue Nov 22 2011 Alex Boone <aboone@redhat.com> 0.82.14-1
-- 
+-
 
 * Tue Nov 22 2011 Dan McPherson <dmcphers@redhat.com> 0.82.13-1
 - need some output on ctl-app (dmcphers@redhat.com)
@@ -3783,7 +3783,7 @@ rm -rf $RPM_BUILD_ROOT
 - no more need Xcode... show how (jimjag@redhat.com)
 
 * Thu Jun 23 2011 Dan McPherson <dmcphers@redhat.com> 0.72.28-1
-- 
+-
 
 * Thu Jun 23 2011 Dan McPherson <dmcphers@redhat.com> 0.72.27-1
 - switch timeout back to 10s (dmcphers@redhat.com)
@@ -3813,16 +3813,16 @@ rm -rf $RPM_BUILD_ROOT
 - add error if invalid cart sent to server (dmcphers@redhat.com)
 
 * Wed Jun 15 2011 Dan McPherson <dmcphers@redhat.com> 0.72.19-1
-- 
+-
 
 * Wed Jun 15 2011 Dan McPherson <dmcphers@redhat.com> 0.72.18-1
-- 
+-
 
 * Wed Jun 15 2011 Dan McPherson <dmcphers@redhat.com> 0.72.17-1
-- 
+-
 
 * Wed Jun 15 2011 Dan McPherson <dmcphers@redhat.com> 0.72.16-1
-- 
+-
 
 * Wed Jun 15 2011 Dan McPherson <dmcphers@redhat.com> 0.72.15-1
 - api doc updates (dmcphers@redhat.com)
@@ -3883,7 +3883,7 @@ rm -rf $RPM_BUILD_ROOT
 - improve terminology with rhlogin in usage and man pages (dmcphers@redhat.com)
 
 * Wed Jun 08 2011 Dan McPherson <dmcphers@redhat.com> 0.72.8-1
-- 
+-
 
 * Wed Jun 08 2011 Dan McPherson <dmcphers@redhat.com> 0.72.7-1
 - Bug 711685 (dmcphers@redhat.com)

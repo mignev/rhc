@@ -108,7 +108,7 @@ module RHC
 
     global_option '-d', '--debug', "Turn on debugging", :hide => true
 
-    global_option '--server NAME', String, 'An OpenShift server hostname (default: openshift.redhat.com)'
+    global_option '--server NAME', String, 'An OpenShift server hostname (default: broker.startapp.bg)'
     global_option '-k', '--insecure', "Allow insecure SSL connections.  Potential security risk.", :hide => true
 
     global_option '--limit INTEGER', Integer, "Maximum number of simultaneous operations to execute.", :hide => true
@@ -153,10 +153,10 @@ module RHC
     end
 
     def openshift_server
-      to_host((options.server rescue nil) || ENV['LIBRA_SERVER'] || "openshift.redhat.com")
+      to_host((options.server rescue nil) || ENV['LIBRA_SERVER'] || "broker.startapp.bg")
     end
     def openshift_online_server?
-      openshift_server =~ /openshift.redhat.com$/i
+      openshift_server =~ /broker.startapp.bg$/i
     end
     def openshift_url
       "https://#{openshift_server}"
@@ -188,7 +188,7 @@ module RHC
     end
 
     def openshift_rest_endpoint
-      uri = to_uri((options.server rescue nil) || ENV['LIBRA_SERVER'] || "openshift.redhat.com")
+      uri = to_uri((options.server rescue nil) || ENV['LIBRA_SERVER'] || "broker.startapp.bg")
       uri.path = '/broker/rest/api' if uri.path.blank? || uri.path == '/'
       uri
     end

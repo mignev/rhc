@@ -59,7 +59,7 @@ describe RHC::Config do
     end
 
     context "with standard values" do
-      let(:values) do 
+      let(:values) do
         {
           'insecure' => 'true',
           'default_rhlogin' => 'user',
@@ -83,7 +83,7 @@ describe RHC::Config do
     its(:has_opts_config?){ should be_false }
 
     it "should return openshift.redhat.com for the server" do
-      subject['libra_server'].should == "openshift.redhat.com"
+      subject['libra_server'].should == "broker.startapp.bg"
     end
   end
 
@@ -115,7 +115,7 @@ describe RHC::Config do
                                                                      "global@redhat.com")
       subject.initialize
 
-      subject['libra_server'].should == "openshift.redhat.com"
+      subject['libra_server'].should == "broker.startapp.bg"
       subject.default_rhlogin.should == "global@redhat.com"
     end
   end
@@ -131,16 +131,16 @@ describe RHC::Config do
       config.read_config_files
     end
 
-    context "Config values with ~/.openshift/express.conf" do
+    context "Config values with ~/.startapp/express.conf" do
       it "should have global and local config" do
         ConfigHelper.write_out_config(ConfigHelper.global_config_path, "global.openshift.redhat.com",
                                                                        "global@redhat.com")
-        ConfigHelper.write_out_config(File.join(ConfigHelper.home_dir,'.openshift', 'express.conf'),
+        ConfigHelper.write_out_config(File.join(ConfigHelper.home_dir,'.startapp', 'express.conf'),
                                                 "local.openshift.redhat.com","local@redhat.com")
         stub_config
 
-        subject.home_conf_path.should == File.join(ConfigHelper.home_dir, '.openshift')
-        subject.local_config_path.should == File.join(ConfigHelper.home_dir, '.openshift', 'express.conf')
+        subject.home_conf_path.should == File.join(ConfigHelper.home_dir, '.startapp')
+        subject.local_config_path.should == File.join(ConfigHelper.home_dir, '.startapp', 'express.conf')
         subject.has_global_config?.should be_true
         subject.has_local_config?.should be_true
         subject.has_opts_config?.should be_false
@@ -150,7 +150,7 @@ describe RHC::Config do
         ConfigHelper.write_out_config(ConfigHelper.global_config_path, "global.openshift.redhat.com",
                                                                        "global@redhat.com",
                                                                        {"random_value" => "12"})
-        ConfigHelper.write_out_config(File.join(ConfigHelper.home_dir,'.openshift', 'express.conf'),
+        ConfigHelper.write_out_config(File.join(ConfigHelper.home_dir,'.startapp', 'express.conf'),
                                                 "local.openshift.redhat.com",
                                                 "local@redhat.com",
                                                 {"random_value" => 11})
@@ -165,13 +165,13 @@ describe RHC::Config do
       it "should fallback to the default or global if not set in config" do
         ConfigHelper.write_out_config(ConfigHelper.global_config_path, nil,
                                                                        "global@redhat.com")
-        ConfigHelper.write_out_config(File.join(ConfigHelper.home_dir,'.openshift', 'express.conf'),
+        ConfigHelper.write_out_config(File.join(ConfigHelper.home_dir,'.startapp', 'express.conf'),
                                                 nil,
                                                 nil,
                                                 {"random_value" => 11})
         stub_config
 
-        subject['libra_server'].should == "openshift.redhat.com"
+        subject['libra_server'].should == "broker.startapp.bg"
         subject.default_rhlogin.should == "global@redhat.com"
         subject['random_value'].should == "11"
       end
@@ -182,14 +182,14 @@ describe RHC::Config do
         ConfigHelper.write_out_config(ConfigHelper.global_config_path, "global.openshift.redhat.com",
                                                                        "global@redhat.com",
                                                                        {"random_value" => "12"})
-        ConfigHelper.write_out_config(File.join(ConfigHelper.home_dir,'.openshift', 'express.conf'),
+        ConfigHelper.write_out_config(File.join(ConfigHelper.home_dir,'.startapp', 'express.conf'),
                                                 "local.openshift.redhat.com",
                                                 "local@redhat.com",
                                                 {"random_value" => 11})
         ENV['LIBRA_SERVER'] = "env.openshift.redhat.com"
 
         stub_config
-        subject.set_local_config(File.join(ConfigHelper.home_dir,'.openshift', 'express.conf'))
+        subject.set_local_config(File.join(ConfigHelper.home_dir,'.startapp', 'express.conf'))
 
         subject['libra_server'].should == "env.openshift.redhat.com"
         subject.default_rhlogin.should == "local@redhat.com"
@@ -202,7 +202,7 @@ describe RHC::Config do
       it "should have global and local config" do
         ConfigHelper.write_out_config(ConfigHelper.global_config_path, "global.openshift.redhat.com",
                                                                        "global@redhat.com")
-        ConfigHelper.write_out_config(File.join(ConfigHelper.home_dir,'.openshift', 'express.conf'),
+        ConfigHelper.write_out_config(File.join(ConfigHelper.home_dir,'.startapp', 'express.conf'),
                                                 "local.openshift.redhat.com","local@redhat.com")
         ConfigHelper.write_out_config(ConfigHelper.opts_config_path,
                                       "opts.openshift.redhat.com",
@@ -220,7 +220,7 @@ describe RHC::Config do
         ConfigHelper.write_out_config(ConfigHelper.global_config_path, "global.openshift.redhat.com",
                                                                        "global@redhat.com",
                                                                        {"random_value" => "12"})
-        ConfigHelper.write_out_config(File.join(ConfigHelper.home_dir,'.openshift', 'express.conf'),
+        ConfigHelper.write_out_config(File.join(ConfigHelper.home_dir,'.startapp', 'express.conf'),
                                                 "local.openshift.redhat.com",
                                                 "local@redhat.com",
                                                 {"random_value" => 11})
@@ -241,7 +241,7 @@ describe RHC::Config do
       it "should fallback to the default or global or local if not set in config" do
         ConfigHelper.write_out_config(ConfigHelper.global_config_path, nil,
                                                                        "global@redhat.com")
-        ConfigHelper.write_out_config(File.join(ConfigHelper.home_dir,'.openshift', 'express.conf'),
+        ConfigHelper.write_out_config(File.join(ConfigHelper.home_dir,'.startapp', 'express.conf'),
                                                 nil,
                                                 nil,
                                                 {"random_value" => 11,
@@ -254,7 +254,7 @@ describe RHC::Config do
         subject.check_cpath({"config" => ConfigHelper.opts_config_path,
                                  "random_val" => "ok"})
 
-        subject['libra_server'].should == "openshift.redhat.com"
+        subject['libra_server'].should == "broker.startapp.bg"
         subject.default_rhlogin.should == "global@redhat.com"
         subject['random_value'].should == "10"
         subject['local_value'].should == "local"

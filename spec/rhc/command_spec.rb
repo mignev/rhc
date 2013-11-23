@@ -66,7 +66,7 @@ describe RHC::Commands::Base do
           expects_running('test').should call(:run).on(instance).with(no_args)
           wizard_run.should be_false
 
-          stderr.should match("You have not yet configured the OpenShift client tools")
+          stderr.should match("You have not yet configured the StartApp client tools")
         end
       end
     end
@@ -406,7 +406,7 @@ describe RHC::Commands::Base do
         let(:username){ 'foo' }
         let(:arguments){ ['test', '-l', username, '--server', mock_uri] }
         before{ instance.send(:token_store).should_receive(:get).with{ |user, server| user.should == username; server.should == instance.send(:openshift_server) }.and_return(nil) }
-        before do 
+        before do
           stub_api(false, false)
           stub_api_request(:get, 'broker/rest/user', false).to_return{ |request| request.headers['Authorization'] =~ /Basic/ ? simple_user(username) : {:status => 401, :headers => {'WWW-Authenticate' => 'Basic realm="openshift broker"'} } }
           stub_api_request(:get, 'broker/rest/user', {:user => username, :password => 'password'}).to_return{ simple_user(username) }

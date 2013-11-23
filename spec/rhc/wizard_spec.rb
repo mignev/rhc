@@ -23,7 +23,7 @@ describe RHC::Wizard do
 
   describe "#finalize_stage" do
     subject{ described_class.new(config, options) }
-    before{ subject.should_receive(:say).with(/The OpenShift client tools have been configured/) }
+    before{ subject.should_receive(:say).with(/The StartApp client tools have been configured/) }
     it{ subject.send(:finalize_stage).should be_true }
   end
 
@@ -84,7 +84,7 @@ describe RHC::Wizard do
       subject.should_receive(:applications).and_return([app])
       Net::SSH.should_receive(:start).with("foo.com", "uuid", {:timeout => 60}).and_return(ssh)
       subject.send(:test_ssh_connectivity).should be_true
-    end    
+    end
     it "should handle a failed connection" do
       subject.should_receive(:ssh_key_uploaded?).and_return(true)
       subject.should_receive(:applications).and_return([app])
@@ -97,7 +97,7 @@ describe RHC::Wizard do
       subject.should_receive(:debug_error).with(interrupt)
       Net::SSH.should_receive(:start).and_raise(interrupt)
       expect{ subject.send(:test_ssh_connectivity) }.to raise_error(RuntimeError, /Connection attempt to foo.com was interrupted/)
-    end    
+    end
   end
 
   describe "#login_stage" do
@@ -192,7 +192,7 @@ describe RHC::Wizard do
         it "should check for an existing token" do
           store.should_receive(:get).and_return(nil)
 
-          subject.should_receive(:info).with(/OpenShift can create and store a token on disk/).ordered
+          subject.should_receive(:info).with(/StartApp can create and store a token on disk/).ordered
           subject.should_receive(:agree).with(/Generate a token now?/).ordered.and_return(false)
 
           subject.send(:login_stage).should be_true
@@ -209,7 +209,7 @@ describe RHC::Wizard do
 
         it "should not generate a token if the user does not request it" do
           store.should_not_receive(:get)
-          subject.should_receive(:info).with(/OpenShift can create and store a token on disk/).ordered
+          subject.should_receive(:info).with(/StartApp can create and store a token on disk/).ordered
           subject.should_receive(:agree).with(/Generate a token now?/).ordered.and_return(false)
 
           subject.send(:login_stage).should be_true
@@ -218,7 +218,7 @@ describe RHC::Wizard do
 
         it "should generate a token if the user requests it" do
           store.should_not_receive(:get)
-          subject.should_receive(:info).with(/OpenShift can create and store a token on disk/).ordered
+          subject.should_receive(:info).with(/StartApp can create and store a token on disk/).ordered
           subject.should_receive(:agree).with(/Generate a token now?/).ordered.and_return(true)
           subject.should_receive(:say).with(/Generating an authorization token for this client /).ordered
           rest_client.should_receive(:new_session).ordered.and_return(auth_token)
@@ -371,7 +371,7 @@ describe RHC::Wizard do
 
       context "when a multiple keys exist but is not the same" do
         before{ setup_mock_ssh(true) }
-        before do 
+        before do
           stub_one_key('a_key')
           stub_add_key_error('invalid```--', 'Invalid key name')
           stub_add_key('another_key')

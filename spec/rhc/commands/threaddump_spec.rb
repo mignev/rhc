@@ -65,7 +65,7 @@ describe RHC::Commands::Threaddump do
       it "should display help" do
         expect { run }.to exit_with_code(0)
       end
-      it('should output usage') { run_output.should match("Usage: rhc threaddump") }
+      it('should output usage') { run_output.should match("Usage: app threaddump") }
     end
   end
 

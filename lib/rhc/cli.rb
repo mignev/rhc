@@ -27,8 +27,8 @@ module RHC
       runner = RHC::CommandRunner.new(args)
       Commander::Runner.instance_variable_set :@singleton, runner
 
-      program :name,           'rhc'
-      program :description,    'Command line interface for OpenShift.'
+      program :name,           'app'
+      program :description,    'Command line interface for StartApp.'
       program :version,        RHC::VERSION::STRING
       program :help_formatter, RHC::HelpFormatter
       program :int_message,    " Interrupted\n"

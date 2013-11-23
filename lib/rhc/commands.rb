@@ -206,7 +206,7 @@ module RHC
               config.has_local_config? or
               config.has_opts_config?)
 
-        $stderr.puts RHC::Helpers.color("You have not yet configured the OpenShift client tools. Please run 'rhc setup'.", :yellow)
+        $stderr.puts RHC::Helpers.color("You have not yet configured the StartApp client tools. Please run 'app setup'.", :yellow)
       end
     end
 

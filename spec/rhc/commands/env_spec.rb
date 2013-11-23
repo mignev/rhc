@@ -37,7 +37,7 @@ describe RHC::Commands::Env do
       it "should display help" do
         expect { run }.to exit_with_code(0)
       end
-      it('should output usage') { run_output.should match("Usage: rhc env <action>$") }
+      it('should output usage') { run_output.should match("Usage: app env <action>$") }
     end
   end
 
@@ -52,7 +52,7 @@ describe RHC::Commands::Env do
         it "should display help" do
           expect { run }.to exit_with_code(0)
         end
-        it('should output usage') { run_output.should match("Usage: rhc env-set <VARIABLE=VALUE>") }
+        it('should output usage') { run_output.should match("Usage: app env-set <VARIABLE=VALUE>") }
       end
     end
   end
@@ -68,7 +68,7 @@ describe RHC::Commands::Env do
         it "should display help" do
           expect { run }.to exit_with_code(0)
         end
-        it('should output usage') { run_output.should match("Usage: rhc env-unset <VARIABLE>") }
+        it('should output usage') { run_output.should match("Usage: app env-unset <VARIABLE>") }
       end
     end
   end
@@ -83,7 +83,7 @@ describe RHC::Commands::Env do
         it "should display help" do
           expect { run }.to exit_with_code(0)
         end
-        it('should output usage') { run_output.should match("Usage: rhc env-list <app> [--namespace NAME]") }
+        it('should output usage') { run_output.should match("Usage: app env-list <app> [--namespace NAME]") }
       end
     end
   end
@@ -98,7 +98,7 @@ describe RHC::Commands::Env do
         it "should display help" do
           expect { run }.to exit_with_code(0)
         end
-        it('should output usage') { run_output.should match("Usage: rhc env-show <VARIABLE>") }
+        it('should output usage') { run_output.should match("Usage: app env-show <VARIABLE>") }
       end
     end
   end

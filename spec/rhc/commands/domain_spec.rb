@@ -380,7 +380,7 @@ describe RHC::Commands::Domain do
         rest_client.domains.empty?.should be_true
       end
     end
-    
+
   end
 
   describe 'help' do
@@ -390,7 +390,7 @@ describe RHC::Commands::Domain do
       it "should display help" do
         expect { run }.to exit_with_code(0)
       end
-      it('should output usage') { run_output.should match("Usage: rhc domain") }
+      it('should output usage') { run_output.should match("Usage: app domain") }
     end
   end
 end

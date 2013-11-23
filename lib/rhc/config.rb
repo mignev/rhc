@@ -8,7 +8,7 @@ module RHC
       "#{ENV['OPENSHIFT_CONFIG'].presence || 'express'}.conf"
     end
     def home_conf_dir
-      File.join(home_dir, '.openshift')
+      File.join(home_dir, '.startapp')
     end
     def local_config_path
       File.join(home_conf_dir, conf_name)
@@ -26,12 +26,12 @@ module RHC
 
   #
   # Responsible for encapsulating the loading and retrieval of OpenShift
-  # configuration files and converting them to commandline option 
+  # configuration files and converting them to commandline option
   # equivalents.  It also provides the converse option - converting a set
   # of commandline options back into a config file.
   #
   # In general, the values stored in the config should be identical (require
-  # little or no type conversion) to their option form.  As new global 
+  # little or no type conversion) to their option form.  As new global
   # options are added, only this class should have to change to persist that
   # option.
   #
@@ -124,7 +124,7 @@ module RHC
 
       @default_proxy = nil
 
-      @defaults.add('libra_server', 'openshift.redhat.com')
+      @defaults.add('libra_server', 'broker.startapp.bg')
       @env_config.add('libra_server', ENV['LIBRA_SERVER']) if ENV['LIBRA_SERVER']
       @env_config.add('libra_server', ENV['RHC_SERVER']) if ENV['RHC_SERVER']
 

@@ -5,7 +5,7 @@ module WizardStepsHelper
 
     last_output do |s|
       s.count("\n").should >= 3
-      s.should match(/OpenShift Client Tools \(RHC\) Setup Wizard/)
+      s.should match(/StartApp Client Tools \(app\) Setup Wizard/)
     end
   end
 
@@ -61,7 +61,7 @@ module WizardStepsHelper
     input_line 'yes'
 
     next_stage.should_not be_nil
-    
+
     last_output do |s|
       s.should match('Since you do not have any keys associated')
       #s.should match(/Fingerprint\: (?:[a-f0-9]{2}\:){15}/)
@@ -152,7 +152,7 @@ module WizardStepsHelper
 
   def should_create_a_namespace
     input_line "thisnamespaceistoobigandhastoomanycharacterstobevalid"
-    input_line "invalidnamespace" 
+    input_line "invalidnamespace"
     input_line "testnamespace"
 
     next_stage.should_not be_nil
@@ -172,7 +172,7 @@ module WizardStepsHelper
     last_output do |s|
       s.should match(/Checking for a domain .*none/)
       s.should match("You will not be able to create an application without completing this step.")
-      s.should match("You may create a domain later through 'rhc create-domain'")
+      s.should match("You may create a domain later through 'app create-domain'")
     end
     subject.send(:options).__hash__[:namespace].should be_nil
   end
@@ -188,8 +188,8 @@ module WizardStepsHelper
     next_stage.should_not be_nil
 
     last_output do |s|
-      s.should match('rhc create-app <app name> mock_standalone_cart-1')
-      s.should match('rhc create-app <app name> mock_standalone_cart-2')
+      s.should match('app create-app <app name> mock_standalone_cart-1')
+      s.should match('app create-app <app name> mock_standalone_cart-2')
     end
   end
 
@@ -309,7 +309,7 @@ EOF
   end
 
   def setup_different_config
-    path = File.join(File.join(home_dir, '.openshift'), 'express.conf')
+    path = File.join(File.join(home_dir, '.startapp'), 'express.conf')
     FileUtils.mkdir_p File.dirname(path)
     File.open(path, "w") do |file|
       file.puts <<EOF

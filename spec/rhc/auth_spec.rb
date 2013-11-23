@@ -15,7 +15,7 @@ describe RHC::Auth::Basic do
   its(:password){ should be_nil }
   its(:options){ should_not be_nil }
   its(:can_authenticate?){ should be_false }
-  its(:openshift_server){ should == 'openshift.redhat.com' }
+  its(:openshift_server){ should == 'broker.startapp.bg' }
 
   def resolved(hash)
     hash.each_pair do |k,v|
@@ -57,7 +57,7 @@ describe RHC::Auth::Basic do
       its(:ask_username){ should be_false }
       its(:ask_password){ should be_false }
       its(:username?){ should be_false }
-      it("should not retry") do 
+      it("should not retry") do
         subject.should_not_receive(:ask_username)
         subject.retry_auth?(double(:status => 401), client).should be_false
       end
@@ -234,7 +234,7 @@ describe RHC::Auth::Token do
   its(:username){ should be_nil }
   its(:options){ should_not be_nil }
   its(:can_authenticate?){ should be_false }
-  its(:openshift_server){ should == 'openshift.redhat.com' }
+  its(:openshift_server){ should == 'broker.startapp.bg' }
 
   context "with user options" do
     its(:username){ should be_nil }
@@ -254,7 +254,7 @@ describe RHC::Auth::Token do
       let(:default_options){ {:noprompt => true} }
 
       its(:username){ should be_nil }
-      it("should not retry") do 
+      it("should not retry") do
       end
     end
   end
@@ -278,7 +278,7 @@ describe RHC::Auth::Token do
   context "when initialized with a store" do
     subject{ described_class.new(nil, nil, store) }
     let(:store){ double }
-    before{ store.should_receive(:get).with(nil, 'openshift.redhat.com').and_return(token) }
+    before{ store.should_receive(:get).with(nil, 'broker.startapp.bg').and_return(token) }
     it("should read the token for the user") do
       subject.send(:token).should == token
     end
@@ -355,7 +355,7 @@ describe RHC::Auth::Token do
         let(:auth){ double('nested_auth', :can_authenticate? => true) }
         subject{ described_class.new(options, auth) }
 
-        it("should not use token auth") do 
+        it("should not use token auth") do
           auth.should_receive(:retry_auth?).with(response, client).and_return true
           subject.retry_auth?(response, client).should be_true
         end
@@ -382,7 +382,7 @@ describe RHC::Auth::Token do
             let(:client){ double('client', :supports_sessions? => true) }
             before{ client.should_receive(:new_session).with(:auth => auth).and_return(auth_token) }
 
-            it("should print a message") do 
+            it("should print a message") do
               subject.should_receive(:info).with("Please sign in to start a new session to #{subject.openshift_server}.")
               auth.should_receive(:retry_auth?).with(response, client).and_return true
               subject.retry_auth?(response, client).should be_true

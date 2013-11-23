@@ -7,11 +7,11 @@ Usage: <%= Array(program :name).first %> <%= @command.name %> <%= @command.synta
 
 Arguments
 <%= table(
-	  @command.info[:args].select do |opt| 
+	  @command.info[:args].select do |opt|
 	  	not opt[:hide] and not opt[:switches].present?
-	  end.map do |opt| 
-	  	[opt[:name], opt[:description]] 
-	  end, 
+	  end.map do |opt|
+	  	[opt[:name], opt[:description]]
+	  end,
 	  table_args('  ', 25)
 	).join("\n") %>
 <% end -%>
@@ -19,26 +19,26 @@ Arguments
 
 Options
 <%= table(
-	  @command.options.select do |opt| 
+	  @command.options.select do |opt|
 	  	not opt[:hide]
-	  end.map do |opt| 
-	  	[opt[:switches].join(', '), opt[:description]] 
-	  end, 
+	  end.map do |opt|
+	  	[opt[:switches].join(', '), opt[:description]]
+	  end,
 	  table_args('  ', 25)
 	).join("\n") %>
 <% end -%>
 
 Global Options
 <%= table(
-	  @global_options.select do |opt| 
+	  @global_options.select do |opt|
 	  	not (opt[:hide] || @command.options.any?{ |o| (o[:switches] & opt[:switches]).present? })
-	  end.map do |opt| 
-	  	[opt[:switches].join(', '), opt[:description]] 
-	  end, 
+	  end.map do |opt|
+	  	[opt[:switches].join(', '), opt[:description]]
+	  end,
 	  table_args('  ', 25)
 	).join("\n") %>
 
-  See 'rhc help options' for a full list of global options.
+  See '<%= Array(program :name).first %> help options' for a full list of global options.
 <% end -%>
 <% if @actions.present? -%>
 

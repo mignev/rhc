@@ -94,7 +94,7 @@ module RHC
     end
 
     def server_context(defaults=nil, arg=nil)
-      value = ENV['LIBRA_SERVER'] || (!options.clean && config['libra_server']) || "openshift.redhat.com"
+      value = ENV['LIBRA_SERVER'] || (!options.clean && config['libra_server']) || "broker.startapp.bg"
       defaults[arg] = value if defaults && arg
       value
     end

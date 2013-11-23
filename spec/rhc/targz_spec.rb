@@ -41,7 +41,7 @@ describe RHC::TarGz do
 
   context 'with simple compressed .tar.gz' do
     subject { File.expand_path('../assets/targz_sample.tar.gz', __FILE__) }
-    it('should read file in chunks') { 
+    it('should read file in chunks') {
       control = false
       File.open(subject, 'rb') do |file|
         file.chunk(1024) do |chunk|
