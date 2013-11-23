@@ -98,7 +98,7 @@ describe RHC::Commands::Setup do
         @wizard.stub(:run).and_return(true)
         expect { run }.to exit_with_code(0)
       end
-      it('should output usage') { run_output.should match("Connects to an OpenShift server to get you started. Will") }
+      it('should output usage') { run_output.should match("Connects to an StartApp server to get you started. Will") }
     end
   end
 
