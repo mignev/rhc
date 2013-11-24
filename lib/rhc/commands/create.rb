@@ -60,6 +60,7 @@ module RHC::Commands
         options.from_code = bundle["code"]
       end
 
+      cartridges = helping_words_cleaner(cartridges)
       self.class.superclass.instance_method(:create).bind(self).call name, cartridges
 
       0
@@ -72,19 +73,27 @@ module RHC::Commands
       JSON.parse @response
     end
 
+    def list_quickstarts(quickstarts)
+      quicks = quickstarts.map{ |q| [q[0], q[1]['name'] || ''] }.sort{ |a,b| a[1].downcase <=> b[1].downcase }
+      quicks.unshift ['==========', '=========']
+      quicks.unshift ['Quickstart', 'Full name']
+      say table(quicks)
+    end
+
+    def helping_words_cleaner(words_list)
+      words = ['with', 'and']
+      words.each do |word|
+        words_list.delete word
+      end
+      words_list
+    end
+
     def check_name!(name)
       return unless name.blank?
 
       paragraph{ say "You can choose some of ours quickstarts. Just write `app create myapp quickstart`" }
       paragraph{ list_quickstarts(get_quickstarts) }
 
-    end
-
-    def list_quickstarts(quickstarts)
-      carts = quickstarts.map{ |c| [c[0], c[1]['name'] || ''] }.sort{ |a,b| a[1].downcase <=> b[1].downcase }
-      carts.unshift ['==========', '=========']
-      carts.unshift ['Quickstart', 'Full name']
-      say table(carts)
     end
 
   end
