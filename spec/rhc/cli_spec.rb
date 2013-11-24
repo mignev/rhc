@@ -43,7 +43,7 @@ describe RHC::CLI do
   shared_examples_for 'a command-line options help page' do
     let(:arguments) { @arguments or raise "no arguments" }
     it('should contain an introduction') { run_output.should =~ /The following options can be passed to any/ }
-    it('should reference the configuration') { run_output.should match(".openshift/express.conf") }
+    it('should reference the configuration') { run_output.should match(".startapp/express.conf") }
     it('should describe the --config switch') { run_output.should =~ /\-\-config FILE/ }
     it('should describe the --ssl-version switch') { run_output.should =~ /\-\-ssl\-version VERSION/ }
   end
@@ -119,7 +119,7 @@ describe RHC::CLI do
     context 'with help and a single matching command segment' do
       let(:arguments){ ['help', 'app creat'] }
       it("prints the usage for the command"){ run_output.should match('Usage: app app-create <') }
-      it("prints part of the description for the command"){ run_output.should match('OpenShift runs the components of your') }
+      it("prints part of the description for the command"){ run_output.should match('StartApp runs the components of your') }
       it("prints a local option"){ run_output.should match('--namespace NAME') }
     end
 

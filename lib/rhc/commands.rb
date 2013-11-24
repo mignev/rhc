@@ -194,7 +194,7 @@ module RHC
       command = instance.active_command
 
       if new_cmd = command.deprecated(command_name)
-        new_cmd = "rhc #{command.name}" if new_cmd == true
+        new_cmd = "app #{command.name}" if new_cmd == true
         RHC::Helpers.deprecated_command new_cmd
       end
     end
