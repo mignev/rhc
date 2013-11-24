@@ -8,7 +8,7 @@ module RHC::Commands
   class App < Base
     summary "Commands for creating and managing applications"
     description <<-DESC
-      Creates and controls an OpenShift application.  To see the list of all
+      Creates and controls an StartApp application.  To see the list of all
       applications use the rhc domain show command.  Note that delete is not
       reversible and will stop your application and then remove the application
       and repo from the remote server. No local changes are made.
@@ -19,17 +19,17 @@ module RHC::Commands
 
     summary "Create an application"
     description <<-DESC
-      Create an application. Every OpenShift application must have one
+      Create an application. Every StartApp application must have one
       web cartridge which serves web requests, and can have a number of
       other cartridges which provide capabilities like databases,
       scheduled jobs, or continuous integration.
 
       You can see a list of all valid cartridge types by running
-      'rhc cartridge list'. OpenShift also supports downloading cartridges -
+      'rhc cartridge list'. StartApp also supports downloading cartridges -
       pass a URL in place of the cartridge name and we'll download
       and install that cartridge into your app.  Keep in mind that
       these cartridges receive no security updates.  Note that not
-      all OpenShift servers allow downloaded cartridges.
+      all StartAPp servers allow downloaded cartridges.
 
       When your application is created, a URL combining the name of
       your app and the name of your domain will be registered in DNS.
@@ -39,7 +39,7 @@ module RHC::Commands
       structures - check the README provided with the cartridge if
       you have questions.
 
-      OpenShift runs the components of your application on small virtual
+      StartApp runs the components of your application on small virtual
       servers called "gears".  Each account or plan is limited to a number
       of gears which you can use across multiple applications.  Some
       accounts or plans provide access to gears with more memory or more
@@ -130,8 +130,8 @@ module RHC::Commands
               warn "not complete"
               add_issue("Jenkins failed to install - #{e}",
                         "Installing jenkins and jenkins-client",
-                        "rhc create-app jenkins",
-                        "rhc add-cartridge jenkins-client -a #{rest_app.name}")
+                        "app create-app jenkins",
+                        "app add-cartridge jenkins-client -a #{rest_app.name}")
             end
           end
         end
@@ -155,7 +155,7 @@ module RHC::Commands
             warn "failure"
             add_issue("We were unable to lookup your hostname (#{rest_app.host}) in a reasonable amount of time and can not clone your application.",
                       "Clone your git repo",
-                      "rhc git-clone #{rest_app.name}")
+                      "app git-clone #{rest_app.name}")
 
             output_issues(rest_app)
             return 0
@@ -171,7 +171,7 @@ module RHC::Commands
               unless RHC::Helpers.windows? and windows_nslookup_bug?(rest_app)
                 add_issue("We were unable to clone your application's git repo - #{e}",
                           "Clone your git repo",
-                          "rhc git-clone #{rest_app.name}")
+                          "app git-clone #{rest_app.name}")
               end
             end
           end
@@ -550,7 +550,7 @@ module RHC::Commands
           warn "not complete"
           add_issue("Jenkins client failed to install - #{exit_message}",
                     "Install the jenkins client",
-                    "rhc add-cartridge jenkins-client -a #{rest_app.name}")
+                    "app add-cartridge jenkins-client -a #{rest_app.name}")
         end
       end
 
@@ -631,7 +631,7 @@ We recommend you wait a few minutes then clone your git repository manually.
 WINSOCKISSUE
           add_issue(issue,
                     "Clone your git repo",
-                    "rhc git-clone #{rest_app.name}")
+                    "app git-clone #{rest_app.name}")
 
           return true
         end

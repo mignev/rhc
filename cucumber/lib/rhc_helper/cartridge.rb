@@ -26,7 +26,7 @@ module RHCHelper
     end
 
     def rhc_cartridge(cmd)
-      full_cmd = "rhc cartridge #{cmd} -l #{$username} -p #{$password} #{@app_name ? "-a #{@app_name}" : ""}"
+      full_cmd = "app cartridge #{cmd} -l #{$username} -p #{$password} #{@app_name ? "-a #{@app_name}" : ""}"
       full_cmd += " #{@name}" if cmd != "list"
       run(full_cmd, nil) do |exitstatus, out, err, arg|
         yield exitstatus, out, err, arg if block_given?

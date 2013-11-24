@@ -49,8 +49,8 @@ module RHC
     # Option name     [config_key      type           comment_string_for_config]
     #                  if nil, == key  nil == string  won't be written to file if nil
     OPTIONS = {
-      :server =>      ['libra_server', nil, 'The OpenShift server to connect to'],
-      :rhlogin =>     ['default_rhlogin', nil, 'Your OpenShift login name'],
+      :server =>      ['libra_server', nil, 'The StartApp server to connect to'],
+      :rhlogin =>     ['default_rhlogin', nil, 'Your StartApp login name'],
       :password =>    nil,
       :use_authorization_tokens =>
                       [nil, :boolean, 'If true, the server will attempt to create and use authorization tokens to connect to the server'],

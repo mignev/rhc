@@ -4,7 +4,15 @@ Usage: <%= Array(program :name).first %> [--help] [--version] [--debug] <command
 
 <%
 remaining = Hash[commands.dup.select{ |name, command| not command.summary.blank? }]
-basic = remaining.slice!('setup', 'create-app', 'apps', 'cartridges', 'add-cartridge', 'set-env', 'logout')
+basic = remaining.slice!(
+    'setup',
+    'create',
+    'delete',
+    'clone',
+    'show',
+    'apps',
+    'cartridges',
+    'logout')
 remaining.delete_if{ |name, command| alias?(name) }
 begin -%>
 Getting started:
@@ -12,17 +20,35 @@ Getting started:
 <% end unless basic.empty? %>
 <%
 
-debugging = remaining.slice!('app restart', 'app show', 'tail', 'port-forward', 'threaddump', 'snapshot', 'git-clone')
+debugging = remaining.slice!(
+    'add-cartridge',
+    'set-env',
+    'start',
+    'stop',
+    'force-stop',
+    'reload',
+    'restart',
+    'configure',
+    'tidy',
+    'logs',
+    'port-forward',
+    'threaddump',
+    'snapshot',
+    'deploy',
+    'clone')
 begin -%>
 Working with apps:
 <%= table(debugging.map{ |arr| arr[1] = arr[1].summary || arr[1].description; arr }, table_args('  ', 18)).join("\n") %>
 <% end unless debugging.empty? %>
 Management commands:
-<%= table(remaining.sort.select{ |arr| arr[1].root? and arr[1].summary.present? }.map do |arr|
+<%
+management = remaining.select {|item| item !~ /tail|git-clone|app/i }
+begin -%>
+<%= table(management.sort.select{ |arr| arr[1].root? and arr[1].summary.present? }.map do |arr|
 		arr[1] = arr[1].summary || arr[1].description
 		arr
 	end, table_args('  ', 18)).join("\n") %>
-
+<% end unless management.empty? %>
   Some management commands have nested actions - run '<%= Array(program :name).first %> help <command>' for more info.
 
 See '<%= Array(program :name).first %> help <command>' for more information on a specific command.  You can see a list of all commands with '<%= Array(program :name).first %> help commands'. See '<%= Array(program :name).first %> help options' for a list of global command-line options and information about the config file.

@@ -102,13 +102,13 @@ module RHC
     # Global config
     #
 
-    global_option '-l', '--rhlogin LOGIN', "OpenShift login"
-    global_option '-p', '--password PASSWORD', "OpenShift password"
+    global_option '-l', '--rhlogin LOGIN', "StartApp login"
+    global_option '-p', '--password PASSWORD', "StartApp password"
     global_option '--token TOKEN', "An authorization token for accessing your account."
 
     global_option '-d', '--debug', "Turn on debugging", :hide => true
 
-    global_option '--server NAME', String, 'An OpenShift server hostname (default: broker.startapp.bg)'
+    global_option '--server NAME', String, 'An StartApp server hostname (default: broker.startapp.bg)'
     global_option '-k', '--insecure', "Allow insecure SSL connections.  Potential security risk.", :hide => true
 
     global_option '--limit INTEGER', Integer, "Maximum number of simultaneous operations to execute.", :hide => true
@@ -132,7 +132,7 @@ module RHC
     global_option '--noprompt', "Suppress all interactive operations command", :hide => true do
       $terminal.page_at = nil
     end
-    global_option '--config FILE', "Path of a different config file (default: #{system_path("~/.openshift/express.conf")})", :hide => true
+    global_option '--config FILE', "Path of a different config file (default: #{system_path("~/.startapp/express.conf")})", :hide => true
     global_option '--clean', "Ignore any saved configuration options", :hide => true
     global_option '--mock', "Run in mock mode", :hide => true do
       #:nocov:

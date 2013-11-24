@@ -20,7 +20,7 @@ _rhc()
     IFS=" "
     case "${prev[*]}" in
       <%- for name, data in commands %>
-      <%= "\"rhc %s\")" % name %>
+      <%= "\"app %s\")" % name %>
         if [[ "$cur" == -* ]]; then
           opts=<%= "\"%s\"" % data[:switches].join(" ") %>
         else

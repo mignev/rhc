@@ -5,7 +5,7 @@ module RHCHelper
   # A class to help maintain the state from rhc calls and helper
   # methods around application management.
   #
-  class App 
+  class App
     extend Persistable
     extend Runnable
     extend API
@@ -46,14 +46,14 @@ module RHCHelper
       if $namespace
         # Namespace is already created, so don't pass anything in
         logger.info("Namespace (#{$namespace}) should be found by the wizard")
-        run("rhc setup", nil, args) do |exitstatus, out, err, arg|
+        run("app setup", nil, args) do |exitstatus, out, err, arg|
           raise "Unmatched namespace #{$namespace}\n\n#{out}" unless out.include?($namespace)
         end
       else
         # Pass in a blank value for namespace to create in the next step
         args << ''
         logger.info("Skipping namespace creation")
-        run("rhc setup", nil, args)
+        run("app setup", nil, args)
       end
       $keyed_users << $username
     end

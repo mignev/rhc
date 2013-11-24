@@ -6,9 +6,9 @@ module RHC::Commands
   class Setup < Base
     suppress_wizard
 
-    summary "Connects to OpenShift and sets up your keys and domain"
+    summary "Connects to StartApp and sets up your keys and domain"
     description <<-DESC
-      Connects to an OpenShift server to get you started. Will help you
+      Connects to an StartApp server to get you started. Will help you
       configure your SSH keys, set up a domain, and check for any potential
       problems with Git or SSH.
 
@@ -19,7 +19,7 @@ module RHC::Commands
       Pass the --clean option to ignore your saved configuration and only
       use options you pass on the command line. Pass --config FILE to use
       default values from another config (the values will still be written
-      to .openshift/express.conf).
+      to .startapp/express.conf).
 
       If the server supports authorization tokens, you may pass the
       --create-token option to instruct the wizard to generate a key for you.
@@ -40,7 +40,7 @@ module RHC::Commands
         FileUtils.cp(src, dest)
 
         say <<-LINE.strip_heredoc
-          To enable tab-completion for RHC under Bash shells, add the following command to
+          To enable tab-completion for `app` under Bash shells, add the following command to
           your .bashrc or .bash_profile file:
 
             . #{dest}

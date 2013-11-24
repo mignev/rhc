@@ -234,7 +234,7 @@ describe RHC::Commands::Base do
       context 'and when deprecated alias is called' do
         it("prints a warning") do
           expects_running('static', 'exe', "arg").should call(:execute).on(instance).with('arg')
-          stderr.should match("Warning: This command is deprecated. Please use 'rhc static-execute' instead.")
+          stderr.should match("Warning: This command is deprecated. Please use 'app static-execute' instead.")
         end
       end
 
