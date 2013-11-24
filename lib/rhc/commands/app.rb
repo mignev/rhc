@@ -9,7 +9,7 @@ module RHC::Commands
     summary "Commands for creating and managing applications"
     description <<-DESC
       Creates and controls an StartApp application.  To see the list of all
-      applications use the rhc domain show command.  Note that delete is not
+      applications use the app domain show command.  Note that delete is not
       reversible and will stop your application and then remove the application
       and repo from the remote server. No local changes are made.
       DESC
@@ -25,7 +25,7 @@ module RHC::Commands
       scheduled jobs, or continuous integration.
 
       You can see a list of all valid cartridge types by running
-      'rhc cartridge list'. StartApp also supports downloading cartridges -
+      'app cartridge list'. StartApp also supports downloading cartridges -
       pass a URL in place of the cartridge name and we'll download
       and install that cartridge into your app.  Keep in mind that
       these cartridges receive no security updates.  Note that not
@@ -43,7 +43,7 @@ module RHC::Commands
       servers called "gears".  Each account or plan is limited to a number
       of gears which you can use across multiple applications.  Some
       accounts or plans provide access to gears with more memory or more
-      CPU.  Run 'rhc account' to see the number and sizes of gears available
+      CPU.  Run 'app account' to see the number and sizes of gears available
       to you.  When creating an application the --gear-size parameter
       may be specified to change the gears used.
 
@@ -193,7 +193,7 @@ module RHC::Commands
           end
         end
       end
-      paragraph{ say "Run 'rhc show-app #{name}' for more details about your app." }
+      paragraph{ say "Run 'app show-app #{name}' for more details about your app." }
 
       0
     end
@@ -290,7 +290,7 @@ module RHC::Commands
       the application, which may include cartridge specific text.
 
       The '--configuration' option will display configuration values set in
-      the application. Use 'rhc configure-app' to configure.
+      the application. Use 'app configure-app' to configure.
 
       To see information about the individual gears within an application,
       use '--gears', including whether they are started or stopped and their
@@ -299,7 +299,7 @@ module RHC::Commands
 
       If you want to run commands against individual gears, use:
 
-        rhc ssh <app> --gears '<command>'
+        app ssh <app> --gears '<command>'
 
       to run and display the output from each gear.
 
@@ -348,7 +348,7 @@ module RHC::Commands
 
       elsif options.configuration
         display_app_configurations(find_app)
-        paragraph { say "Use 'rhc configure-app' to change the configuration values of this application." }
+        paragraph { say "Use 'app configure-app' to change the configuration values of this application." }
 
       else
         app = find_app(:include => :cartridges)
@@ -363,11 +363,11 @@ module RHC::Commands
     description <<-DESC
       By default OpenShift applications prepare, distribute, and activate deployments
       on every git push. Alternatively, a user may choose to disable automatic
-      deployments and use 'rhc deploy' and 'rhc deployment' commands to fully control the
+      deployments and use 'app deploy' and 'app deployment' commands to fully control the
       deployment lifecycle.
 
       Use this command to prepare, distribute and deploy manually from a git reference
-      (commit id, tag or branch) or from a binary file. Check also 'rhc configure-app'
+      (commit id, tag or branch) or from a binary file. Check also 'app configure-app'
       to configure your application to deploy manually and set the number of deployments
       to keep in history.
 
@@ -414,7 +414,7 @@ module RHC::Commands
       paragraph { display_app(find_app, nil, [:auto_deploy, :keep_deployments, :deployment_type, :deployment_branch]) }
 
       paragraph { say "Your application '#{rest_app.name}' is #{app_options.empty? ? '' : 'now '}configured as listed above." }
-      paragraph { say "Use 'rhc show-app #{rest_app.name} --configuration' to check your configuration values any time." } if app_options.present?
+      paragraph { say "Use 'app show-app #{rest_app.name} --configuration' to check your configuration values any time." } if app_options.present?
 
       0
     end
@@ -469,11 +469,11 @@ module RHC::Commands
           rest_client.find_domain(options.namespace)
         else
           if rest_client.domains.empty?
-            raise RHC::Rest::DomainNotFoundException, "No domains found. Please create a domain with 'rhc create-domain <namespace>' before creating applications." unless interactive?
+            raise RHC::Rest::DomainNotFoundException, "No domains found. Please create a domain with 'app create-domain <namespace>' before creating applications." unless interactive?
             RHC::DomainWizard.new(config, options, rest_client).run
           end
           domain = rest_client.domains.first
-          raise RHC::Rest::DomainNotFoundException, "No domains found. Please create a domain with 'rhc create-domain <namespace>' before creating applications." unless domain
+          raise RHC::Rest::DomainNotFoundException, "No domains found. Please create a domain with 'app create-domain <namespace>' before creating applications." unless domain
           options.namespace = domain.name
           domain
         end
@@ -656,7 +656,7 @@ WARNING:  Your application was created successfully but had problems during
   If you continue to experience problems after completing these steps,
   you can try destroying and recreating the application:
 
-    $ rhc app delete #{rest_app.name} --confirm
+    $ app app delete #{rest_app.name} --confirm
 
   Please contact us if you are unable to successfully create your
   application:
