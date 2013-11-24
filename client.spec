@@ -3,7 +3,7 @@
 
 Summary:       StartApp client management tools
 Name:          app
-Version: 0.1.0
+Version: 0.1.1
 Release:       1%{?dist}
 Group:         Network/Daemons
 License:       ASL 2.0
