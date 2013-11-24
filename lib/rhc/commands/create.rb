@@ -1,4 +1,6 @@
 require 'rhc/commands/app'
+require 'net/http'
+require 'json'
 
 module RHC::Commands
   class Create < App
@@ -47,10 +49,42 @@ module RHC::Commands
     option ["--enable-jenkins [NAME]"], "Enable Jenkins builds for this application (will create a Jenkins application if not already available). The default name will be 'jenkins' if not specified."
     argument :name, "Name for your application", ["-a", "--app NAME"], :optional => true
     argument :cartridges, "The web framework this application should use", ["-t", "--type CARTRIDGE"], :optional => true, :type => :list
+
     def run(name, cartridges)
+
+      quickstarts = get_quickstarts
+
+      if quickstarts.include? cartridges.first
+        bundle = quickstarts[cartridges.first]
+        cartridges = bundle["cartridges"]
+        options.from_code = bundle["code"]
+      end
+
       self.class.superclass.instance_method(:create).bind(self).call name, cartridges
 
       0
+    end
+
+    private
+
+    def get_quickstarts
+      @response  ||= Net::HTTP.get(URI.parse('http://m.ignev.net/mess/quickstarts.json'))
+      JSON.parse @response
+    end
+
+    def check_name!(name)
+      return unless name.blank?
+
+      paragraph{ say "You can choose some of ours quickstarts. Just write `app create myapp quickstart`" }
+      paragraph{ list_quickstarts(get_quickstarts) }
+
+    end
+
+    def list_quickstarts(quickstarts)
+      carts = quickstarts.map{ |c| [c[0], c[1]['name'] || ''] }.sort{ |a,b| a[1].downcase <=> b[1].downcase }
+      carts.unshift ['==========', '=========']
+      carts.unshift ['Quickstart', 'Full name']
+      say table(carts)
     end
 
   end

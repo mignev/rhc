@@ -167,7 +167,7 @@ module RHC
         if supports_sessions?
           api.rest_method('ADD_AUTHORIZATION', {
             :scope => 'session',
-            :note => "RHC/#{RHC::VERSION::STRING} (from #{Socket.gethostname rescue 'unknown'} on #{RUBY_PLATFORM})",
+            :note => "APP/#{RHC::VERSION::STRING} (from #{Socket.gethostname rescue 'unknown'} on #{RUBY_PLATFORM})",
             :reuse => true
           }, options)
         end

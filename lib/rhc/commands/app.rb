@@ -661,7 +661,7 @@ WARNING:  Your application was created successfully but had problems during
   Please contact us if you are unable to successfully create your
   application:
 
-    Support - https://www.openshift.com/support
+    Support - support@startapp.bg
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
