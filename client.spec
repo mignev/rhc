@@ -105,6 +105,32 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0644,-,-) /etc/bash_completion.d/app
 
 %changelog
+* Tue Nov 19 2013 Adam Miller <admiller@redhat.com> 1.17.6-1
+- Correctly clean up scalable test (jliggitt@redhat.com)
+
+* Wed Nov 13 2013 Adam Miller <admiller@redhat.com> 1.17.5-1
+- Fix bug 1018077: Regex-breaking cartridge name search (jliggitt@redhat.com)
+- Merge pull request #510 from liggitt/bug_1025241_typo
+  (dmcphers+openshiftbot@redhat.com)
+- Merge pull request #509 from
+  liggitt/bug_1010939_improve_no_allowed_gear_sizes
+  (dmcphers+openshiftbot@redhat.com)
+- Bug 1025241: Fix typo (jliggitt@redhat.com)
+- Bug 1010939: Improve no allowed gear sizes (jliggitt@redhat.com)
+
+* Tue Nov 12 2013 Adam Miller <admiller@redhat.com> 1.17.4-1
+- Merge pull request #508 from fabianofranz/master
+  (dmcphers+openshiftbot@redhat.com)
+- Merge pull request #507 from
+  liggitt/bug_1029166_improve_domain_configure_error
+  (dmcphers+openshiftbot@redhat.com)
+- Fixes origin tests - list cartridges and randomly pick one for testing
+  (contact@fabianofranz.com)
+- Fix bug 1029166: Improve error message on domain configure
+  (jliggitt@redhat.com)
+- Fix bug 1029169 - improve rhc domain configure gear size help
+  (jliggitt@redhat.com)
+
 * Mon Nov 11 2013 Adam Miller <admiller@redhat.com> 1.17.3-1
 - Merge pull request #504 from liggitt/bug_1028963_force_delete_domain
   (dmcphers+openshiftbot@redhat.com)
