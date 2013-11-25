@@ -42,7 +42,7 @@ Working with apps:
 <% end unless debugging.empty? %>
 Management commands:
 <%
-management = remaining.select {|item| item !~ /tail|git-clone|app/i }
+management = remaining.select {|item| item !~ /tail|git-clone|app|server/i }
 begin -%>
 <%= table(management.sort.select{ |arr| arr[1].root? and arr[1].summary.present? }.map do |arr|
 		arr[1] = arr[1].summary || arr[1].description
