@@ -69,12 +69,12 @@ module RHC::Commands
     private
 
     def get_quickstarts
-      @response  ||= Net::HTTP.get(URI.parse('http://m.ignev.net/mess/quickstarts.json'))
+      @response  ||= Net::HTTP.get(URI.parse('http://install.startapp.bg/q/quickstarts.json'))
       JSON.parse @response
     end
 
     def list_quickstarts(quickstarts)
-      quicks = quickstarts.map{ |q| [q[0], q[1]['name'] || ''] }.sort{ |a,b| a[1].downcase <=> b[1].downcase }
+      quicks = quickstarts.map{ |q| ([q[0], q[1]['name'] || '' ] ) if q[1]['view_on_cli'] == "true" }.compact!.sort{ |a,b| a[1].downcase <=> b[1].downcase }
       quicks.unshift ['==========', '=========']
       quicks.unshift ['Quickstart', 'Full name']
       say table(quicks)
