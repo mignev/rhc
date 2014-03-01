@@ -37,9 +37,13 @@ describe "rhc core scenarios" do
       r.stdout.should match 'SSL Certificates'
     end
 
-    it "starts the wizard on default invocation" do
+    it "displays help on default invocation" do
       r = rhc
-      r.stdout.should match "OpenShift Client Tools"
+      r.status.should == 0
+      r.stdout.should match "Command line interface for OpenShift"
+      r.stdout.should match "Usage: rhc"
+      r.stdout.should match "Getting started"
+      r.stdout.should match "See 'rhc help options' for a list"
     end
   end
 
@@ -114,11 +118,17 @@ describe "rhc core scenarios" do
         Dir.chdir @app.name
       end
       let(:git_config){ `git config --list` }
+      let(:git_remotes){ `git remote -v` }
 
       it "will set Git config values" do
         git_config.should match "rhc.app-id=#{app.id}"
         git_config.should match "rhc.app-name=#{app.name}"
         git_config.should match "rhc.domain-name=#{app.domain_name}"
+      end
+
+      it "will set remote branches correctly" do
+        git_remotes.should match "origin"
+        git_remotes.should_not match "upstream"
       end
 
       it "will infer the current app from the git repository" do

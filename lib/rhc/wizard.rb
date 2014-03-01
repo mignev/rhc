@@ -185,7 +185,7 @@ module RHC
             warn "The server's certificate could not be verified, which means that a secure connection can't be established to '#{openshift_server}'."
           end
           if openshift_online_server?
-            paragraph{ warn "This may mean that a server between you and OpenShift is capable of accessing information sent from this client.  If you wish to continue without checking the certificate, please pass the -k (or --insecure) option to this command." }
+            paragraph{ warn "This may mean that a server between you and StartApp is capable of accessing information sent from this client.  If you wish to continue without checking the certificate, please pass the -k (or --insecure) option to this command." }
             return
           else
             paragraph{ warn "You may bypass this check, but any data you send to the server could be intercepted by others." }
@@ -567,9 +567,12 @@ module RHC
       # print out urls and some instructions
       warn <<EOF
 
-In order to fully interact with OpenShift you will need to install and configure a git client if you have not already done so.
+In order to fully interact with StartApp you will need to install and configure a git client if you have not already done so.
 
-Documentation for installing other tools you will need for OpenShift can be found at https://openshift.redhat.com/community/developers/install-the-client-tools
+Documentation for installing other tools you will need for StartApp can be found at:
+
+  * http://docs.startapp.bg/getting-started/app-client-tools-install.html
+  * https://openshift.redhat.com/community/developers/install-the-client-tools
 
 We recommend these free applications:
 

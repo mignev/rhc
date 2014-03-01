@@ -6,7 +6,7 @@ module RHC::Commands
     summary "Manage your application cartridges"
     syntax "<action>"
     description <<-DESC
-      Cartridges add functionality to OpenShift applications.  Each application
+      Cartridges add functionality to StartApp applications.  Each application
       has one web cartridge to listen for HTTP requests, and any number
       of addon cartridges.  Addons may include databases like MySQL and Mongo,
       administrative tools like phpMyAdmin, or build clients like Jenkins.
@@ -17,11 +17,11 @@ module RHC::Commands
       (like Jenkins) or provide environment variables.
 
       Use the 'cartridges' command to see a list of all available cartridges.
-      Add a new cartridge to your application with 'add-cartridge'. OpenShift
+      Add a new cartridge to your application with 'add-cartridge'. StartApp
       also supports downloading cartridges - pass a URL in place of the cartridge
       name and we'll download and install that cartridge into your app.  Keep
       in mind that these cartridges receive no security updates.  Note that
-      not all OpenShift servers allow downloaded cartridges.
+      not all StartApp servers allow downloaded cartridges.
 
       For scalable applications, use the 'cartridge-scale' command on the web
       cartridge to set the minimum and maximum scale.
@@ -52,18 +52,20 @@ module RHC::Commands
             say c.description
             paragraph{ say "Tagged with: #{tags.sort.join(', ')}" } if tags.present?
             paragraph{ say format_usage_message(c) } if c.usage_rate?
+            paragraph{ warn "Does not receive automatic security updates" } unless c.automatic_updates?
           end
         end
       else
         say table(carts.collect do |c|
-          [c.usage_rate? ? "#{c.name} (*)" : c.name,
+          [[c.name, c.usage_rate? ? " (*)" : "", c.automatic_updates? ? '' : ' (!)'].join(''),
            c.display_name,
-           c.only_in_existing? ? 'addon' : 'web']
+           c.only_in_existing? ? 'addon' : 'web',
         end)
       end
 
       paragraph{ say "Note: Web cartridges can only be added to new applications." }
-      paragraph{ say "(*) denotes a cartridge with additional usage costs." } if carts.any? { |c| c.usage_rate? }
+      paragraph{ say "(*) denotes a cartridge with additional usage costs." } if carts.any?(&:usage_rate?)
+      paragraph{ say "(!) denotes a cartridge that will not receive automatic security updates." } unless options.verbose || carts.none?(&:automatic_updates?)
 
       0
     end
@@ -73,7 +75,7 @@ module RHC::Commands
     takes_application
     option ["-e", "--env VARIABLE=VALUE"], "Environment variable(s) to be set on this cartridge, or path to a file containing environment variables", :type => :list
     option ["-g", "--gear-size SIZE"], "Gear size controls how much memory and CPU your cartridge can use"
-    argument :cart_type, "The type of the cartridge you are adding (run 'rhc cartridge list' to obtain a list of available cartridges)", ["-c", "--cartridge cart_type"]
+    argument :cart_type, "The type of the cartridge you are adding (run 'app cartridge list' to obtain a list of available cartridges)", ["-c", "--cartridge cart_type"]
     alias_action :"app cartridge add", :root_command => true, :deprecated => true
     def add(cart_type)
       cart = check_cartridges(cart_type, :from => not_standalone_cartridges).first
@@ -97,7 +99,7 @@ module RHC::Commands
       rest_cartridge.environment_variables = cart.environment_variables if cart.environment_variables.present?
 
       paragraph{ display_cart(rest_cartridge) }
-      paragraph{ say "Use 'rhc env --help' to manage environment variable(s) on this cartridge and application." } if cart.environment_variables.present?
+      paragraph{ say "Use 'app env --help' to manage environment variable(s) on this cartridge and application." } if cart.environment_variables.present?
       paragraph{ warn "Server does not support environment variables." if options.env && !supports_env_vars  }
       paragraph{ warn "Server does not support gear sizes for cartridges." if options.gear_size && !supports_gear_size  }
       paragraph{ rest_cartridge.messages.each { |msg| success msg } }
@@ -235,7 +237,7 @@ module RHC::Commands
       0
     rescue RHC::Rest::TimeoutException => e
       raise unless e.on_receive?
-      info "The server has closed the connection, but your scaling operation is still in progress.  Please check the status of your operation via 'rhc show-app'."
+      info "The server has closed the connection, but your scaling operation is still in progress.  Please check the status of your operation via 'app show-app'."
       1
     end
 

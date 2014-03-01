@@ -11,12 +11,12 @@ module RHC::Commands
       For example, when creating a domain with the name "test", any applications
       created in that domain will have the public URL:
 
-        http://<appname>-test.rhcloud.com
+        http://<appname>-test.startapp.bg
 
       Each account may have access to one or more domains shared by others.  Depending
       on your plan or configuration, you may be able to create more than one domain.
 
-      To create your first domain, run 'rhc setup' or 'rhc create-domain'.
+      To create your first domain, run 'app setup' or 'app create-domain'.
       DESC
     default_action :help
 
@@ -31,7 +31,7 @@ module RHC::Commands
       application public URLs. For example, when creating a domain with the name "test",
       all applications in that domain will have the public URL:
 
-        http://<appname>-test.rhcloud.com
+        http://<appname>-test.startapp.bg
 
       The domain owner may limit the gear sizes available to applications by using the
       '--allowed-gear-sizes' option.  If '--no-allowed-gear-sizes' is set, no applications
@@ -45,7 +45,7 @@ module RHC::Commands
       rest_client.add_domain(namespace, :allowed_gear_sizes => check_allowed_gear_sizes)
       success "done"
 
-      info "You may now create an application using the 'rhc create-app' command"
+      info "You may now create an application using the 'app create-app' command"
 
       0
     end
@@ -70,7 +70,7 @@ module RHC::Commands
     summary "Change one or more configuration settings on the domain"
     syntax "<namespace>"
     option ['--no-allowed-gear-sizes'], 'Do not allow any gear sizes in this domain.', :optional => true
-    option ['--allowed-gear-sizes [SIZES]'], "A comma-delimited list of gear sizes allowed in this domain. To see available sizes, run 'rhc account'.", :optional => true
+    option ['--allowed-gear-sizes [SIZES]'], "A comma-delimited list of gear sizes allowed in this domain. To see available sizes, run 'app account'.", :optional => true
     takes_domain :argument => true
     def configure(_)
       domain = find_domain
@@ -95,15 +95,15 @@ module RHC::Commands
     def show(_)
       domain = find_domain
 
-      warn "In order to deploy applications, you must create a domain with 'rhc setup' or 'rhc create-domain'." and return 1 unless domain
+      warn "In order to deploy applications, you must create a domain with 'app setup' or 'app create-domain'." and return 1 unless domain
 
       applications = domain.applications(:include => :cartridges)
-      display_domain(domain, applications)
+      display_domain(domain, applications, true)
 
       if applications.present?
         success "You have #{pluralize(applications.length, 'application')} in your domain."
       else
-        success "The domain #{domain.name} exists but has no applications. You can use 'rhc create-app' to create a new application."
+        success "The domain #{domain.name} exists but has no applications. You can use 'app create-app' to create a new application."
       end
 
       0
@@ -111,15 +111,16 @@ module RHC::Commands
 
     summary "Display all domains you have access to"
     option ['--mine'], "Display only domains you own"
-    option ['--ids'], "Display the unique id of the domain (not supported by all servers)"
+    option ['--ids'], "Display the unique id of the domain (deprecated, domain IDs are now displayed by default)"
     alias_action :domains, :root_command => true
     def list
       domains = rest_client.send(options.mine ? :owned_domains : :domains)
 
-      warn "In order to deploy applications, you must create a domain with 'rhc setup' or 'rhc create-domain'." and return 1 unless domains.present?
+      warn "In order to deploy applications, you must create a domain with 'app setup' or 'app create-domain'." and return 1 unless domains.present?
+      warn "The --ids option is deprecated. Domain IDs are displayed by default." if options.ids
 
       domains.each do |d|
-        display_domain(d, nil, options.ids)
+        display_domain(d, nil, true)
       end
 
       success "You have access to #{pluralize(domains.length, 'domain')}."

@@ -411,6 +411,16 @@ describe RHC::Commands::App do
       end
     end
 
+    context 'when run without git installed' do
+      before do
+        @instance.stub(:has_git?) { false }
+      end
+      it "should print out git warning" do
+        run_output.should match("You do not have git installed")
+      end
+    end
+
+
     context 'when run with windows and no nslookup bug' do
       before do
         RHC::Helpers.stub(:windows?) { true }
@@ -659,6 +669,19 @@ describe RHC::Commands::App do
       it { run_output.should match('start') }
       it { expect{ run }.to exit_with_code(0) }
     end
+
+    context 'app scale-up' do
+      let(:arguments) { ['app', 'scale-up', '-a', 'app1'] }
+      it { run_output.should match('scaled up') }
+      it { expect{ run }.to exit_with_code(0) }
+    end
+
+    context 'app scale-down' do
+      let(:arguments) { ['app', 'scale-down', '-a', 'app1'] }
+      it { run_output.should match('scaled down') }
+      it { expect{ run }.to exit_with_code(0) }
+    end
+
 
     context 'app stop' do
       let(:arguments) { ['app', 'stop', 'app1'] }

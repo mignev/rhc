@@ -32,6 +32,15 @@ describe RHC::Commands::GitClone do
   describe 'git-clone' do
     let(:arguments) { ['app', 'git-clone', 'app1'] }
 
+    context 'when run without git installed' do
+      before do
+        @instance.stub(:has_git?) { false }
+      end
+      it "should print out git warning" do
+        run_output.should match("You do not have git installed")
+      end
+    end
+
     context "stubbing git_clone_repo" do
       context "reports success successfully" do
         before do
@@ -44,6 +53,19 @@ describe RHC::Commands::GitClone do
 
         it { expect { run }.to exit_with_code(0) }
         it { run_output.should match("Cloned") }
+
+        context 'when app has an initial git url' do
+          before do
+            @app2 = @domain.add_application("app2", "mock_unique_standalone_cart", nil, "default", "git://test")
+            @instance.stub(:git_remote_add) do |remote_name, remote_url|
+              say "Added remote #{remote_name} pointing to #{remote_url}"
+              true
+            end
+          end
+          let(:arguments) { ['git-clone', 'app2'] }
+          it { run_output.should match("Added remote startapp pointing to git://test") }
+        end
+
       end
 
       context "testing git_clone_deploy_hooks" do

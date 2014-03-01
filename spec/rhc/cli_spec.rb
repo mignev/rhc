@@ -81,8 +81,7 @@ describe RHC::CLI do
       it_should_behave_like 'a global help page'
 
       context "without a config file" do
-        before{ RHC::Wizard.stub(:has_configuration?).and_return(false) }
-        it_should_behave_like 'a first run wizard'
+        it_should_behave_like 'a global help page'
       end
     end
 
@@ -174,13 +173,12 @@ describe RHC::CLI do
   describe '#set_terminal' do
     before(:each) { mock_terminal }
     it('should update $terminal.wrap_at') do
-      $stdin.should_receive(:tty?).once.and_return(true)
+      $stdout.should_receive(:tty?).twice.and_return(true)
       HighLine::SystemExtensions.should_receive(:terminal_size).and_return([5])
       expect { RHC::CLI.set_terminal }.to change($terminal, :wrap_at)
     end
     it('should not update $terminal.page_at') do
-      $stdin.should_receive(:tty?).once.and_return(true)
-      $stdout.should_receive(:tty?).once.and_return(true)
+      $stdout.should_receive(:tty?).twice.and_return(true)
       expect { RHC::CLI.set_terminal }.to_not change($terminal, :page_at)
     end
   end

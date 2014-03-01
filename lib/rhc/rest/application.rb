@@ -21,6 +21,14 @@ module RHC
         attributes['id'] || uuid
       end
 
+      def uuid
+        if (client.api_version_negotiated >= 1.6)
+          attributes['id']
+        else
+          attributes['uuid']
+        end
+      end
+
       def domain
         domain_id
       end
@@ -95,6 +103,14 @@ module RHC
       def tidy
         debug "Starting application #{name}"
         rest_method 'TIDY', :event => "tidy"
+      end
+
+      def scale_up
+        rest_method 'SCALE_UP', :event => "scale-up"
+      end
+
+      def scale_down
+        rest_method 'SCALE_DOWN', :event => "scale-down"
       end
 
       def start

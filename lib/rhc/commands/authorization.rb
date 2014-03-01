@@ -1,12 +1,31 @@
 module RHC::Commands
   class Authorization < Base
 
+    summary "Manage your authorization tokens"
+    syntax "<action>"
+    description <<-DESC
+      An authorization token grants access to the StartApp REST API with a
+      set of privileges called 'scopes' for a limited time.  You can add an
+      optional note to each authorization token to assist you in remembering
+      why it was created.
+
+      To see all your authorizations, run 'app authorizations'.
+
+      To view the list of scopes supported by this server, run the
+      'app add-authorization' command with no arguments.
+
+      These commands manage your authorization tokens on the server - if you
+      want to clear your authorization tokens from the current machine use
+      'app logout'
+      DESC
+    default_action :help
+
     summary "Show the authorization tokens for your account"
     description <<-DESC
-      Shows the full list of authorization tokens on your account. You 
+      Shows the full list of authorization tokens on your account. You
       can add, edit, or delete authorizations with subcommands.
 
-      An authorization token grants access to the OpenShift REST API with
+      An authorization token grants access to the StartApp REST API with
       a set of privileges called 'scopes' for a limited time.  You can
       add an optional note to each authorization token to assist you in
       remembering what is available.
@@ -26,7 +45,7 @@ module RHC::Commands
     syntax "--scopes SCOPES [--note NOTE] [--expires-in SECONDS]"
     description <<-DESC
       Add an authorization to your account. An authorization token grants
-      access to the OpenShift REST API with a set of privileges called 'scopes'
+      access to the StartApp REST API with a set of privileges called 'scopes'
       for a limited time.  You can add an optional note to each authorization
       token to assist you in remembering what is available.
 
@@ -42,10 +61,10 @@ module RHC::Commands
       server maximum, you will be given the default value.
       DESC
     def add
-      unless options.scopes
+      unless options.scopes.to_s.strip.present?
         say "When adding an authorization, you must specify which permissions clients will have."
         scope_help
-        say "Run 'rhc authorization add --help' to see more options"
+        say "Run 'app authorization add --help' to see more options"
         return 0
       end
 
@@ -60,9 +79,9 @@ module RHC::Commands
     summary "Delete one or more authorization tokens"
     syntax "<token_or_id> [...<token_or_id>]"
     description <<-DESC
-      Delete one or more of the authorization tokens associated with 
+      Delete one or more of the authorization tokens associated with
       your account. After deletion, any clients using the token will
-      no longer have access to OpenShift and will need to reauthenticate.
+      no longer have access to StartApp and will need to reauthenticate.
       DESC
     argument :auth_token, "The token you wish to delete", ['--auth-token TOKEN'], :type => :list
     def delete(tokens)

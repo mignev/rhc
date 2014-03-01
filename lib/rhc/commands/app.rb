@@ -165,7 +165,11 @@ module RHC::Commands
         if options.git
           section(:now => true, :top => 1, :bottom => 1) do
             begin
-              repo_dir = git_clone_application(rest_app)
+              if has_git?
+                repo_dir = git_clone_application(rest_app)
+              else
+                warn "You do not have git installed, so your application's git repo will not be cloned"
+              end
             rescue RHC::GitException => e
               warn "#{e}"
               unless RHC::Helpers.windows? and windows_nslookup_bug?(rest_app)
@@ -239,6 +243,27 @@ module RHC::Commands
       results { say "#{app} stopped" }
       0
     end
+
+    summary "Scale up the application's web cartridge"
+    syntax "<app> [--namespace NAME]"
+    takes_application :argument => true
+    def scale_up(app)
+      app_action :scale_up
+
+      results { say "#{app} scaled up" }
+      0
+    end
+
+    summary "Scale down the application's web cartridge"
+    syntax "<app> [--namespace NAME]"
+    takes_application :argument => true
+    def scale_down(app)
+      app_action :scale_down
+
+      results { say "#{app} scaled down" }
+      0
+    end
+
 
     summary "Stops all application processes"
     syntax "<app> [--namespace NAME]"
@@ -576,7 +601,7 @@ module RHC::Commands
           sleep_time *= DEFAULT_DELAY_THROTTLE
         }
 
-        debug "End checking for application dns @ '#{host} - found=#{found}'"
+        debug "End checking for application dns @ '#{host} - found=#{host_found}'"
 
         host_found
       end
