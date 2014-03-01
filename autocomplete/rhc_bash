@@ -70,7 +70,7 @@ _app()
 
       "app add-cartridge")
         if [[ "$cur" == -* ]]; then
-          opts="--app --application-id --cartridge --env --namespace"
+          opts="--app --application-id --cartridge --env --gear-size --namespace"
         else
           opts=""
         fi
@@ -86,7 +86,7 @@ _app()
 
       "app add-sshkey")
         if [[ "$cur" == -* ]]; then
-          opts="--confirm"
+          opts="--confirm --content --type"
         else
           opts=""
         fi
@@ -192,7 +192,7 @@ _app()
         if [[ "$cur" == -* ]]; then
           opts=""
         else
-          opts="create delete start stop force-stop restart reload tidy show deploy configure env snapshot"
+          opts="env snapshot create delete start stop scale-up scale-down force-stop restart reload tidy show deploy configure"configure env snapshot"
         fi
         ;;
 
@@ -206,7 +206,7 @@ _app()
 
       "app app create")
         if [[ "$cur" == -* ]]; then
-          opts="--app --auto-deploy --deployment-branch --dns --enable-jenkins --env --from-code --gear-size --git --keep-deployments --namespace --no-auto-deploy --no-dns --no-git --no-keys --repo --scaling --type"
+          opts="--app --dns --enable-jenkins --env --from-code --gear-size --git --namespace --no-dns --no-git --no-keys --repo --scaling --type"
         else
           opts=""
         fi
@@ -259,6 +259,23 @@ _app()
           opts=""
         fi
         ;;
+
+      "app app scale-down")
+        if [[ "$cur" == -* ]]; then
+          opts="--app --application-id --namespace"
+        else
+          opts=""
+        fi
+        ;;
+
+      "app app scale-up")
+        if [[ "$cur" == -* ]]; then
+          opts="--app --application-id --namespace"
+        else
+          opts=""
+        fi
+        ;;
+
 
       "app app show")
         if [[ "$cur" == -* ]]; then
@@ -318,7 +335,7 @@ _app()
 
       "app app-create")
         if [[ "$cur" == -* ]]; then
-          opts="--app --auto-deploy --deployment-branch --dns --enable-jenkins --env --from-code --gear-size --git --keep-deployments --namespace --no-auto-deploy --no-dns --no-git --no-keys --repo --scaling --type"
+          opts="--app --dns --enable-jenkins --env --from-code --gear-size --git --namespace --no-dns --no-git --no-keys --repo --scaling --type"
         else
           opts=""
         fi
@@ -518,7 +535,7 @@ _app()
 
       "app cartridge add")
         if [[ "$cur" == -* ]]; then
-          opts="--app --application-id --cartridge --env --namespace"
+          opts="--app --application-id --cartridge --env --gear-size --namespace"
         else
           opts=""
         fi
@@ -606,7 +623,7 @@ _app()
 
       "app cartridge-add")
         if [[ "$cur" == -* ]]; then
-          opts="--app --application-id --cartridge --env --namespace"
+          opts="--app --application-id --cartridge --env --gear-size --namespace"
         else
           opts=""
         fi
@@ -1348,6 +1365,22 @@ _app()
         fi
         ;;
 
+      "app scale-down-app")
+        if [[ "$cur" == -* ]]; then
+          opts="--app --application-id --namespace"
+        else
+          opts=""
+        fi
+        ;;
+
+      "app scale-up-app")
+        if [[ "$cur" == -* ]]; then
+          opts="--app --application-id --namespace"
+        else
+          opts=""
+        fi
+        ;;
+
       "app server")
         if [[ "$cur" == -* ]]; then
           opts=""
@@ -1510,7 +1543,7 @@ _app()
 
       "app sshkey-add")
         if [[ "$cur" == -* ]]; then
-          opts="--confirm"
+          opts="--confirm --content --type"
         else
           opts=""
         fi
