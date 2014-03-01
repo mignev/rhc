@@ -146,7 +146,7 @@ describe RHC::Wizard do
         expect_raise_from_api(RHC::Rest::SelfSignedCertificate.new('reason', 'message'))
         subject.should_receive(:warn).with(/server's certificate is self-signed/).ordered
         subject.should_receive(:openshift_online_server?).ordered.and_return(true)
-        subject.should_receive(:warn).with(/server between you and OpenShift/).ordered
+        subject.should_receive(:warn).with(/server between you and StartApp/).ordered
 
         subject.send(:login_stage).should be_nil
       end
@@ -155,7 +155,7 @@ describe RHC::Wizard do
         expect_raise_from_api(RHC::Rest::CertificateVerificationFailed.new('reason', 'message'))
         subject.should_receive(:warn).with(/server's certificate could not be verified/).ordered
         subject.should_receive(:openshift_online_server?).ordered.and_return(true)
-        subject.should_receive(:warn).with(/server between you and OpenShift/).ordered
+        subject.should_receive(:warn).with(/server between you and StartApp/).ordered
 
         subject.send(:login_stage).should be_nil
       end

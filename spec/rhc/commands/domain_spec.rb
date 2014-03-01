@@ -12,7 +12,7 @@ describe RHC::Commands::Domain do
       let(:arguments) { ['domain'] }
 
       it { expect { run }.to exit_with_code(1) }
-      it { run_output.should match(/To create your first domain.*rhc create-domain/m) }
+      it { run_output.should match(/To create your first domain.*app create-domain/m) }
     end
     context 'when help is shown' do
       let(:arguments) { ['domain', '--noprompt', '--help'] }
@@ -96,7 +96,7 @@ describe RHC::Commands::Domain do
 
     context 'when run with no domains' do
       it { expect { run }.to exit_with_code(1) }
-      it { run_output.should match(/In order to deploy applications.*rhc create-domain/) }
+      it { run_output.should match(/In order to deploy applications.*app create-domain/) }
     end
 
     context 'when run with one domain no apps' do

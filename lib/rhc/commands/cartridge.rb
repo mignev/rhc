@@ -60,6 +60,7 @@ module RHC::Commands
           [[c.name, c.usage_rate? ? " (*)" : "", c.automatic_updates? ? '' : ' (!)'].join(''),
            c.display_name,
            c.only_in_existing? ? 'addon' : 'web',
+          ]
         end)
       end
 

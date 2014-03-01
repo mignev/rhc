@@ -31,7 +31,7 @@ module RHC::Commands
       remembering what is available.
       DESC
     alias_action 'authorizations', :root_command => true
-    default_action :list
+
     def list
       rest_client.authorizations.each{ |auth| paragraph{ display_authorization(auth, token_for_user) } } or info "No authorizations"
 

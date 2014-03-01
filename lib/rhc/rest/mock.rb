@@ -156,6 +156,11 @@ module RHC::Rest::Mock
         to_return(:status => 204)
     end
     def stub_add_authorization(params)
+
+      stub_request(:get, "https://broker.startapp.bg/broker/rest/api").
+        with(:headers => {'Accept'=>'application/json', 'Authorization'=>'Bearer 05bad717f5c73d38d0e9cd9839c3445132b1a9df61dcbc4992e72e2cc6faf06f'}).
+        to_return(:status => 200, :body => "", :headers => {})
+
       stub_api_request(:post, 'broker/rest/user/authorizations', mock_user_auth).
         with(:body => hash_including(params)).
         to_return(new_authorization(params))
