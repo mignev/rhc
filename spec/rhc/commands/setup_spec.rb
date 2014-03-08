@@ -105,7 +105,7 @@ describe RHC::Commands::Setup do
   describe '--autocomplete' do
     let(:arguments) { ['setup', '--autocomplete'] }
     before do
-      path = File.join(Gem.loaded_specs['app'].full_gem_path, "autocomplete")
+      path = File.join(Gem.loaded_specs['startapp'].full_gem_path, "autocomplete")
       FakeFS::FileUtils.mkdir_p(path)
       FakeFS::FileUtils.touch(File.join(path, "rhc_bash"))
     end

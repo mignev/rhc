@@ -1,3 +1,3 @@
 #!/bin/bash
 
-gem build app.gemspec
+gem build startapp.gemspec
