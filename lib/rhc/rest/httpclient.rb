@@ -115,7 +115,7 @@ module RHC
         def to_str
           ["#{user}:#{passwd}"].pack('m').tr("\n", '')
         end
-        [:sub].each do |sym| 
+        [:sub].each do |sym|
           define_method(sym) { |*args|; to_str.send(sym, *args); }
         end
       end
@@ -135,10 +135,12 @@ module RHC
         def challenge(uri, param_str = nil)
           return false if caller.any?{ |s| s =~ /webmock.*httpclient_adapter.*build_request_signature/ }
           uri = urify(uri)
-          challenged = @challengeable[uri]
-          @challengeable[uri] = true
+          # httpclient < 2.4.0 uses @challengeable, >= 2.4.0 uses @challenge
+          challenges = @challenge || @challengeable
+          challenged = challenges[uri]
+          challenges[uri] = true
           !challenged
-        end            
+        end
       end
     end
   end
