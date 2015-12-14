@@ -1,13 +1,13 @@
 %define gemdir %(ruby -rubygems -e 'puts Gem::dir' 2>/dev/null)
 %define gemversion %(echo %{version} | cut -d'.' -f1-3)
 
-Summary:       StartApp client management tools
+Summary:       startapp command line tool will help you to start new apps in CloudStrap Platform.
 Name:          startapp
-Version: 0.1.16
+Version: 0.1.18
 Release:       1%{?dist}
 Group:         Network/Daemons
 License:       ASL 2.0
-URL:           http://startapp.bg
+URL:           http://www.cloudstrap.io
 Source0:       startapp-%{version}.tar.gz
 
 BuildRoot:     %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)

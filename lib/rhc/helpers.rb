@@ -102,13 +102,13 @@ module RHC
     # Global config
     #
 
-    global_option '-l', '--rhlogin LOGIN', "StartApp login"
-    global_option '-p', '--password PASSWORD', "StartApp password"
+    global_option '-l', '--rhlogin LOGIN', "CloudStrap login"
+    global_option '-p', '--password PASSWORD', "CloudStrap password"
     global_option '--token TOKEN', "An authorization token for accessing your account."
 
     global_option '-d', '--debug', "Turn on debugging", :hide => true
 
-    global_option '--server NAME', String, 'An StartApp server hostname (default: api.startappcloud.com)'
+    global_option '--server NAME', String, 'An CloudStrap server hostname (default: api.startappcloud.com)'
     global_option '-k', '--insecure', "Allow insecure SSL connections.  Potential security risk.", :hide => true
 
     global_option '--limit INTEGER', Integer, "Maximum number of simultaneous operations to execute.", :hide => true

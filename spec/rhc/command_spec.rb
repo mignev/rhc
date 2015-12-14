@@ -66,7 +66,7 @@ describe RHC::Commands::Base do
           expects_running('test').should call(:run).on(instance).with(no_args)
           wizard_run.should be_false
 
-          stderr.should match("You have not yet configured the StartApp client tools")
+          stderr.should match("You have not yet configured the CloudStrap client tools")
         end
       end
     end

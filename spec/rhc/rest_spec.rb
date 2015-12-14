@@ -683,7 +683,7 @@ module RHC
         let(:code){ 500 }
 
         it "raises a generic server error" do
-          method.should raise_error(RHC::Rest::ServerErrorException, /server did not respond correctly.*verify that you can access the StartApp server/i)
+          method.should raise_error(RHC::Rest::ServerErrorException, /server did not respond correctly.*verify that you can access the CloudStrap server/i)
         end
 
         context "when proxy is set" do

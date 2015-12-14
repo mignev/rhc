@@ -155,7 +155,7 @@ module RHC
     #
 
     def greeting_stage
-      info "StartApp Client Tools (app) Setup Wizard"
+      info "CloudStrap Client Tools (app) Setup Wizard"
 
       paragraph do
         say "This wizard will help you upload your SSH keys, set your application namespace, and check that other programs like Git are properly installed."
@@ -185,7 +185,7 @@ module RHC
             warn "The server's certificate could not be verified, which means that a secure connection can't be established to '#{openshift_server}'."
           end
           if openshift_online_server?
-            paragraph{ warn "This may mean that a server between you and StartApp is capable of accessing information sent from this client.  If you wish to continue without checking the certificate, please pass the -k (or --insecure) option to this command." }
+            paragraph{ warn "This may mean that a server between you and CloudStrap is capable of accessing information sent from this client.  If you wish to continue without checking the certificate, please pass the -k (or --insecure) option to this command." }
             return
           else
             paragraph{ warn "You may bypass this check, but any data you send to the server could be intercepted by others." }
@@ -202,7 +202,7 @@ module RHC
 
       if rest_client.supports_sessions? && !options.token && options.create_token != false
         paragraph do
-          info "StartApp can create and store a token on disk which allows to you to access the server without using your password. The key is stored in your home directory and should be kept secret.  You can delete the key at any time by running 'app logout'."
+          info "CloudStrap can create and store a token on disk which allows to you to access the server without using your password. The key is stored in your home directory and should be kept secret.  You can delete the key at any time by running 'app logout'."
           if options.create_token or agree "Generate a token now? (yes|no) "
             say "Generating an authorization token for this client ... "
             token = rest_client.new_session
@@ -257,13 +257,13 @@ module RHC
       return true if ssh_key_uploaded?
 
       upload = paragraph do
-        agree "Your public SSH key must be uploaded to the StartApp server to access code.  Upload now? (yes|no) "
+        agree "Your public SSH key must be uploaded to the CloudStrap server to access code.  Upload now? (yes|no) "
       end
 
       if upload
         if ssh_keys.empty?
           paragraph do
-            info "Since you do not have any keys associated with your StartApp account, "\
+            info "Since you do not have any keys associated with your CloudStrap account, "\
                 "your new key will be uploaded as the 'default' key."
             upload_ssh_key('default')
           end
@@ -503,7 +503,7 @@ module RHC
     ###
     def finalize_stage
       paragraph do
-        say "The StartApp client tools have been configured on your computer.  " \
+        say "The CloudStrap client tools have been configured on your computer.  " \
             "You can run this setup wizard at any time by using the command 'app setup' " \
             "We will now execute your original " \
             "command (app #{ARGV.join(" ")})"
@@ -555,7 +555,7 @@ module RHC
           paragraph do
             say "Automated installation of client tools is not supported for " \
                 "your platform. You will need to manually install git for full " \
-                "StartApp functionality."
+                "CloudStrap functionality."
           end
         end
       end
@@ -567,11 +567,11 @@ module RHC
       # print out urls and some instructions
       warn <<EOF
 
-In order to fully interact with StartApp you will need to install and configure a git client if you have not already done so.
+In order to fully interact with CloudStrap you will need to install and configure a git client if you have not already done so.
 
-Documentation for installing other tools you will need for StartApp can be found at:
+Documentation for installing other tools you will need for CloudStrap can be found at:
 
-  * http://docs.startapp.bg/getting-started/app-client-tools-install.html
+  * http://docs.cloudstrap.io/getting-started/app-client-tools-install.html
   * https://openshift.redhat.com/community/developers/install-the-client-tools
 
 We recommend these free applications:

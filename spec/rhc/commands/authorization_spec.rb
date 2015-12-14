@@ -46,7 +46,7 @@ describe RHC::Commands::Authorization do
   describe '#run' do
     let(:arguments) { ['authorization']}
     context 'given no arguments' do
-      it('should display help'){ run_output.should =~ /An authorization token grants access to the StartApp REST API.*To see all your authorizations/m }
+      it('should display help'){ run_output.should =~ /An authorization token grants access to the CloudStrap REST API.*To see all your authorizations/m }
       it 'should ask for an argument' do
         expect{ run }.to exit_with_code(1)
       end

@@ -8,7 +8,7 @@ module RHC::Commands
   class App < Base
     summary "Commands for creating and managing applications"
     description <<-DESC
-      Creates and controls an StartApp application.  To see the list of all
+      Creates and controls an CloudStrap application.  To see the list of all
       applications use the app domain show command.  Note that delete is not
       reversible and will stop your application and then remove the application
       and repo from the remote server. No local changes are made.
@@ -19,17 +19,17 @@ module RHC::Commands
 
     summary "Create an application"
     description <<-DESC
-      Create an application. Every StartApp application must have one
+      Create an application. Every CloudStrap application must have one
       web cartridge which serves web requests, and can have a number of
       other cartridges which provide capabilities like databases,
       scheduled jobs, or continuous integration.
 
       You can see a list of all valid cartridge types by running
-      'app cartridge list'. StartApp also supports downloading cartridges -
+      'app cartridge list'. CloudStrap also supports downloading cartridges -
       pass a URL in place of the cartridge name and we'll download
       and install that cartridge into your app.  Keep in mind that
       these cartridges receive no security updates.  Note that not
-      all StartAPp servers allow downloaded cartridges.
+      all CloudStrap servers allow downloaded cartridges.
 
       When your application is created, a URL combining the name of
       your app and the name of your domain will be registered in DNS.
@@ -39,7 +39,7 @@ module RHC::Commands
       structures - check the README provided with the cartridge if
       you have questions.
 
-      StartApp runs the components of your application on small virtual
+      CloudStrap runs the components of your application on small virtual
       servers called "gears".  Each account or plan is limited to a number
       of gears which you can use across multiple applications.  Some
       accounts or plans provide access to gears with more memory or more
@@ -732,7 +732,7 @@ WARNING:  Your application was created successfully but had problems during
   Please contact us if you are unable to successfully create your
   application:
 
-    Support - support@startapp.bg
+    Support - support@cloudstrap.io
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

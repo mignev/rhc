@@ -4,7 +4,7 @@ module RHC::Commands
     summary "Manage your authorization tokens"
     syntax "<action>"
     description <<-DESC
-      An authorization token grants access to the StartApp REST API with a
+      An authorization token grants access to the CloudStrap REST API with a
       set of privileges called 'scopes' for a limited time.  You can add an
       optional note to each authorization token to assist you in remembering
       why it was created.
@@ -25,7 +25,7 @@ module RHC::Commands
       Shows the full list of authorization tokens on your account. You
       can add, edit, or delete authorizations with subcommands.
 
-      An authorization token grants access to the StartApp REST API with
+      An authorization token grants access to the CloudStrap REST API with
       a set of privileges called 'scopes' for a limited time.  You can
       add an optional note to each authorization token to assist you in
       remembering what is available.
@@ -45,7 +45,7 @@ module RHC::Commands
     syntax "--scopes SCOPES [--note NOTE] [--expires-in SECONDS]"
     description <<-DESC
       Add an authorization to your account. An authorization token grants
-      access to the StartApp REST API with a set of privileges called 'scopes'
+      access to the CloudStrap REST API with a set of privileges called 'scopes'
       for a limited time.  You can add an optional note to each authorization
       token to assist you in remembering what is available.
 
@@ -81,7 +81,7 @@ module RHC::Commands
     description <<-DESC
       Delete one or more of the authorization tokens associated with
       your account. After deletion, any clients using the token will
-      no longer have access to StartApp and will need to reauthenticate.
+      no longer have access to CloudStrap and will need to reauthenticate.
       DESC
     argument :auth_token, "The token you wish to delete", ['--auth-token TOKEN'], :type => :list
     def delete(tokens)

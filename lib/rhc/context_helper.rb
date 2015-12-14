@@ -131,7 +131,7 @@ module RHC
           rest_client.find_application(domain, app, opts)
         end
       else
-        raise ArgumentError, "You must specify an application with -a, or run this command from within Git directory cloned from StartApp."
+        raise ArgumentError, "You must specify an application with -a, or run this command from within Git directory cloned from CloudStrap."
       end
     end
 

@@ -23,7 +23,7 @@ module RHC::Commands
 
         0
       else
-        error "You do not have git installed. In order to fully interact with StartApp you will need to install and configure a git client."
+        error "You do not have git installed. In order to fully interact with CloudStrap you will need to install and configure a git client."
         2
       end
     end

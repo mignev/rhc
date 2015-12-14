@@ -5,7 +5,7 @@ describe RHC::CLI do
 
   shared_examples_for 'a global help page' do
     let(:arguments) { @arguments or raise "no arguments" }
-    it('should contain the program description') { run_output.should =~ /Command line interface for StartApp/ }
+    it('should contain the program description') { run_output.should =~ /Command line interface for CloudStrap/ }
     it('should describe getting started') { run_output.should =~ /Getting started:/ }
     it('should describe basic command') { run_output.should =~ /Working with apps:/ }
     it('should mention the help command') { run_output.should =~ /See 'app help <command>'/ }
@@ -21,7 +21,7 @@ describe RHC::CLI do
 
   shared_examples_for 'a help page' do
     let(:arguments) { @arguments or raise "no arguments" }
-    it('should contain the program description') { run_output.should =~ /Command line interface for StartApp/ }
+    it('should contain the program description') { run_output.should =~ /Command line interface for CloudStrap/ }
     it('should contain the global options') { run_output.should =~ /Global Options/ }
     it('should provide a --config switch') { run_output.should =~ /\-\-config FILE/ }
   end
@@ -118,7 +118,7 @@ describe RHC::CLI do
     context 'with help and a single matching command segment' do
       let(:arguments){ ['help', 'app creat'] }
       it("prints the usage for the command"){ run_output.should match('Usage: app app-create <') }
-      it("prints part of the description for the command"){ run_output.should match('StartApp runs the components of your') }
+      it("prints part of the description for the command"){ run_output.should match('CloudStrap runs the components of your') }
       it("prints a local option"){ run_output.should match('--namespace NAME') }
     end
 

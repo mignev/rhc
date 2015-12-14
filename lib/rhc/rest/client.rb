@@ -455,7 +455,7 @@ module RHC
           rescue SocketError, Errno::ECONNREFUSED => e
             raise ConnectionException.new(
               "Unable to connect to the server (#{e.message})."\
-              "#{client.proxy.present? ? " Check that you have correctly specified your proxy server '#{client.proxy}' as well as your StartApp server '#{args[1]}'." : " Check that you have correctly specified your StartApp server '#{args[1]}'."}")
+              "#{client.proxy.present? ? " Check that you have correctly specified your proxy server '#{client.proxy}' as well as your CloudStrap server '#{args[1]}'." : " Check that you have correctly specified your CloudStrap server '#{args[1]}'."}")
           rescue Errno::ECONNRESET => e
             raise ConnectionException.new(
               "The server has closed the connection unexpectedly (#{e.message}). Your last operation may still be running on the server; please check before retrying your last request.")
@@ -589,7 +589,7 @@ module RHC
             return true if i == 0 && args[0] == :get
             raise ConnectionException.new(
               "An error occurred while communicating with the server. This problem may only be temporary."\
-              "#{client.proxy.present? ? " Check that you have correctly specified your proxy server '#{client.proxy}' as well as your StartApp server '#{args[1]}'." : " Check that you have correctly specified your StartApp server '#{args[1]}'."}")
+              "#{client.proxy.present? ? " Check that you have correctly specified your proxy server '#{client.proxy}' as well as your CloudStrap server '#{args[1]}'." : " Check that you have correctly specified your CloudStrap server '#{args[1]}'."}")
           end
         end
 
@@ -695,7 +695,7 @@ module RHC
           "The server did not respond correctly. This may be an issue "\
           "with the server configuration or with your connection to the "\
           "server (such as a Web proxy or firewall)."\
-          "#{client.proxy.present? ? " Please verify that your proxy server is working correctly (#{client.proxy}) and that you can access the StartApp server #{url}" : " Please verify that you can access the StartApp server #{url}"}"
+          "#{client.proxy.present? ? " Please verify that your proxy server is working correctly (#{client.proxy}) and that you can access the CloudStrap server #{url}" : " Please verify that you can access the CloudStrap server #{url}"}"
         end
 
         def handle_error!(response, url, client)

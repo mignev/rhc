@@ -23,7 +23,7 @@ describe RHC::Wizard do
 
   describe "#finalize_stage" do
     subject{ described_class.new(config, options) }
-    before{ subject.should_receive(:say).with(/The StartApp client tools have been configured/) }
+    before{ subject.should_receive(:say).with(/The CloudStrap client tools have been configured/) }
     it{ subject.send(:finalize_stage).should be_true }
   end
 
@@ -146,7 +146,7 @@ describe RHC::Wizard do
         expect_raise_from_api(RHC::Rest::SelfSignedCertificate.new('reason', 'message'))
         subject.should_receive(:warn).with(/server's certificate is self-signed/).ordered
         subject.should_receive(:openshift_online_server?).ordered.and_return(true)
-        subject.should_receive(:warn).with(/server between you and StartApp/).ordered
+        subject.should_receive(:warn).with(/server between you and CloudStrap/).ordered
 
         subject.send(:login_stage).should be_nil
       end
@@ -155,7 +155,7 @@ describe RHC::Wizard do
         expect_raise_from_api(RHC::Rest::CertificateVerificationFailed.new('reason', 'message'))
         subject.should_receive(:warn).with(/server's certificate could not be verified/).ordered
         subject.should_receive(:openshift_online_server?).ordered.and_return(true)
-        subject.should_receive(:warn).with(/server between you and StartApp/).ordered
+        subject.should_receive(:warn).with(/server between you and CloudStrap/).ordered
 
         subject.send(:login_stage).should be_nil
       end
@@ -192,7 +192,7 @@ describe RHC::Wizard do
         it "should check for an existing token" do
           store.should_receive(:get).and_return(nil)
 
-          subject.should_receive(:info).with(/StartApp can create and store a token on disk/).ordered
+          subject.should_receive(:info).with(/CloudStrap can create and store a token on disk/).ordered
           subject.should_receive(:agree).with(/Generate a token now?/).ordered.and_return(false)
 
           subject.send(:login_stage).should be_true
@@ -209,7 +209,7 @@ describe RHC::Wizard do
 
         it "should not generate a token if the user does not request it" do
           store.should_not_receive(:get)
-          subject.should_receive(:info).with(/StartApp can create and store a token on disk/).ordered
+          subject.should_receive(:info).with(/CloudStrap can create and store a token on disk/).ordered
           subject.should_receive(:agree).with(/Generate a token now?/).ordered.and_return(false)
 
           subject.send(:login_stage).should be_true
@@ -218,7 +218,7 @@ describe RHC::Wizard do
 
         it "should generate a token if the user requests it" do
           store.should_not_receive(:get)
-          subject.should_receive(:info).with(/StartApp can create and store a token on disk/).ordered
+          subject.should_receive(:info).with(/CloudStrap can create and store a token on disk/).ordered
           subject.should_receive(:agree).with(/Generate a token now?/).ordered.and_return(true)
           subject.should_receive(:say).with(/Generating an authorization token for this client /).ordered
           rest_client.should_receive(:new_session).ordered.and_return(auth_token)
@@ -553,6 +553,7 @@ describe RHC::Wizard do
           setup_mock_ssh_keys(dir)
           pub_ssh = File.join dir, "id_rsa.pub"
           fallback_fingerprint = wizard.send :ssh_keygen_fallback, pub_ssh
+          puts fallback_fingerprint
           internal_fingerprint, short_name = wizard.get_key_fingerprint pub_ssh
 
           fallback_fingerprint.should == internal_fingerprint

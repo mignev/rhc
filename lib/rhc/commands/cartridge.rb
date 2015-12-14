@@ -6,7 +6,7 @@ module RHC::Commands
     summary "Manage your application cartridges"
     syntax "<action>"
     description <<-DESC
-      Cartridges add functionality to StartApp applications.  Each application
+      Cartridges add functionality to CloudStrap applications.  Each application
       has one web cartridge to listen for HTTP requests, and any number
       of addon cartridges.  Addons may include databases like MySQL and Mongo,
       administrative tools like phpMyAdmin, or build clients like Jenkins.
@@ -17,11 +17,11 @@ module RHC::Commands
       (like Jenkins) or provide environment variables.
 
       Use the 'cartridges' command to see a list of all available cartridges.
-      Add a new cartridge to your application with 'add-cartridge'. StartApp
+      Add a new cartridge to your application with 'add-cartridge'. CloudStrap
       also supports downloading cartridges - pass a URL in place of the cartridge
       name and we'll download and install that cartridge into your app.  Keep
       in mind that these cartridges receive no security updates.  Note that
-      not all StartApp servers allow downloaded cartridges.
+      not all CloudStrap servers allow downloaded cartridges.
 
       For scalable applications, use the 'cartridge-scale' command on the web
       cartridge to set the minimum and maximum scale.

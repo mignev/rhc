@@ -5,7 +5,7 @@ module RHC::Commands
     summary "Add or rename the container for your apps"
     syntax "<action>"
     description <<-DESC
-      All StartApp applications must belong to a domain.  The name of the domain
+      All CloudStrap applications must belong to a domain.  The name of the domain
       will be used as part of the public URL for an application.
 
       For example, when creating a domain with the name "test", any applications

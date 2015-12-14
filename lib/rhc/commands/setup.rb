@@ -6,9 +6,9 @@ module RHC::Commands
   class Setup < Base
     suppress_wizard
 
-    summary "Connects to StartApp and sets up your keys and domain"
+    summary "Connects to CloudStrap and sets up your keys and domain"
     description <<-DESC
-      Connects to an StartApp server to get you started. Will help you
+      Connects to an CloudStrap server to get you started. Will help you
       configure your SSH keys, set up a domain, and check for any potential
       problems with Git or SSH.
 

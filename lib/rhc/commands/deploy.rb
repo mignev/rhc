@@ -6,7 +6,7 @@ module RHC::Commands
     summary "Deploy a git reference or binary file of an application"
     syntax "<ref> --app NAME [--namespace NAME]"
     description <<-DESC
-      By default StartApp applications prepare, distribute, and activate deployments
+      By default CloudStrap applications prepare, distribute, and activate deployments
       on every git push. Alternatively, a user may choose to disable automatic
       deployments and use 'app deploy' and 'app deployment' commands to fully control the
       deployment lifecycle.

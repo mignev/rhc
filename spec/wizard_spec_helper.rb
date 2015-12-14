@@ -5,7 +5,7 @@ module WizardStepsHelper
 
     last_output do |s|
       s.count("\n").should >= 3
-      s.should match(/StartApp Client Tools \(app\) Setup Wizard/)
+      s.should match(/CloudStrap Client Tools \(app\) Setup Wizard/)
     end
   end
 
@@ -96,7 +96,7 @@ module WizardStepsHelper
 
     last_output do |s|
       s.should match('Git for Windows')
-      s.should match('In order to fully interact with StartApp you will need to install and configure a git client')
+      s.should match('In order to fully interact with CloudStrap you will need to install and configure a git client')
     end
   end
 

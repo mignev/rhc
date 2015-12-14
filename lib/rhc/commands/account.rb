@@ -2,7 +2,7 @@ module RHC::Commands
   class Account < Base
     suppress_wizard
 
-    summary "Display details about your StartApp account"
+    summary "Display details about your CloudStrap account"
     description <<-DESC
       Shows who you are logged in to the server as and the capabilities
       available to you on this server.

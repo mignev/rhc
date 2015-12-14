@@ -49,13 +49,13 @@ module RHC
     # Option name     [config_key      type           comment_string_for_config]
     #                  if nil, == key  nil == string  won't be written to file if nil
     OPTIONS = {
-      :server =>      ['libra_server', nil, 'The StartApp server to connect to'],
-      :rhlogin =>     ['default_rhlogin', nil, 'Your StartApp login name'],
+      :server =>      ['libra_server', nil, 'The CloudStrap server to connect to'],
+      :rhlogin =>     ['default_rhlogin', nil, 'Your CloudStrap login name'],
       :password =>    nil,
       :use_authorization_tokens =>
                       [nil, :boolean, 'If true, the server will attempt to create and use authorization tokens to connect to the server'],
       :timeout =>     [nil, :integer, 'The default timeout for network operations'],
-      :insecure =>    [nil, :boolean, "If true, certificate errors will be ignored.\nWARNING: This may allow others to eavesdrop on your communication with OpenShift."],
+      :insecure =>    [nil, :boolean, "If true, certificate errors will be ignored.\nWARNING: This may allow others to eavesdrop on your communication with CloudStrap."],
       :ssl_version => [nil, nil, 'The SSL protocol version to use when connecting to this server'],
       :ssl_client_cert_file => [nil, :path_to_file, 'A client certificate file for use with your server'],
       :ssl_ca_file => [nil, :path_to_file, 'A file containing CA one or more certificates'],

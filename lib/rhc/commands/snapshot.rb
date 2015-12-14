@@ -5,7 +5,7 @@ module RHC::Commands
     summary "Save the current state of your application locally"
     syntax "<action>"
     description <<-DESC
-      Snapshots allow you to export the current state of your StartApp application
+      Snapshots allow you to export the current state of your CloudStrap application
       into an archive on your local system, and then to restore it later.
 
       The snapshot archive contains the Git repository, dumps of any attached databases,

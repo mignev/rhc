@@ -206,7 +206,7 @@ module RHC
               config.has_local_config? or
               config.has_opts_config?)
 
-        $stderr.puts RHC::Helpers.color("You have not yet configured the StartApp client tools. Please run 'app setup'.", :yellow)
+        $stderr.puts RHC::Helpers.color("You have not yet configured the CloudStrap client tools. Please run 'app setup'.", :yellow)
       end
     end
 

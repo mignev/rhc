@@ -28,7 +28,7 @@ module RHC
       Commander::Runner.instance_variable_set :@singleton, runner
 
       program :name,           'app'
-      program :description,    'Command line interface for StartApp.'
+      program :description,    'Command line interface for CloudStrap Cloud.'
       program :version,        RHC::VERSION::STRING
       program :help_formatter, RHC::HelpFormatter
       program :int_message,    " Interrupted\n"
